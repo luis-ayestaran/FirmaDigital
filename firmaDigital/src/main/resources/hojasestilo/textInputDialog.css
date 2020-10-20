@@ -1,0 +1,117 @@
+.textInputDialog {
+  -fx-padding: 1em 1em;
+  -fx-background-color: -fx-dark;
+  -fx-border-color: transparent;
+}
+
+.textInputDialog:header *.header-panel{
+  -fx-background-color: -fx-dark;
+  -fx-background-radius: 0.5em;
+  -fx-padding: 1em 2em;
+  -fx-border-color: transparent;
+  /*-fx-background-color: linear-gradient(-fx-primary, -fx-primary);*/
+  -fx-alignment: center;
+}
+
+.textInputDialog:header *.header-panel *.label{
+    -fx-font-size: 2em;
+    -fx-font-family: "SF Pro Display Bold";
+    -fx-text-fill: -fx-light;
+}
+
+.textInputDialog > .content {
+  -fx-padding: 2em;
+}
+
+.textInputDialog > .content .label {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-text-fill: -fx-white;
+  -fx-font-size: 1.45em;
+}
+
+.textInputDialog > .content .text-field {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.45em;
+  -fx-accent: -fx-primary;
+  -fx-background-color: -fx-text-field-bg;
+  -fx-border-color: -fx-text-field-border;
+  -fx-border-width: 2.5px;
+  -fx-text-fill: -fx-light;
+  -fx-prompt-text-fill: -fx-info;
+  -fx-border-radius: 0.5em;
+  -fx-background-radius: 0.5em;
+}
+
+.textInputDialog > .content .password-field {
+  -fx-font-family: "SF Pro Display Regular";
+}
+
+.textInputDialog > .content .text-field:focused {
+    -fx-background-color: -fx-background-dark;
+    -fx-border-color: derive(-fx-primary, 50%);
+}
+
+.textInputDialog > *.button-bar > *.container {
+    -fx-background-color: -fx-dark;
+    -fx-padding: 1em 2em;
+}
+
+.textInputDialog > *.button-bar > *.container > .acceptButton {
+  -fx-background-color: linear-gradient(to top right, -fx-sea-blue, -fx-sea-green);
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.4em;
+  -fx-text-fill: -fx-black;
+  -fx-padding: 0.6em 1.1em;
+  -fx-background-radius: 2em;
+  -fx-cursor: hand;
+  -fx-alignment: center;
+}
+
+.textInputDialog > *.button-bar > *.container > .acceptButton .glyph {
+  -fx-fill: -fx-black;
+}
+
+
+.textInputDialog > *.button-bar > *.container > .acceptButton:hover,
+.textInputDialog > *.button-bar > *.container > .acceptButton:focused {
+  -fx-background-color: linear-gradient(to top right, derive(-fx-sea-blue, 30%), derive(-fx-sea-green, 30%));
+}
+
+.textInputDialog > *.button-bar > *.container > .cancelButton {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0.5em;
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.25em;
+  -fx-text-fill: -fx-info;
+  -fx-border-color: -fx-info;
+  -fx-border-radius: 0.5em;
+  -fx-padding: 0.5em 0.75em;
+  -fx-cursor: hand;
+}
+
+.textInputDialog > *.button-bar > *.container > .cancelButton:hover,
+.textInputDialog > *.button-bar > *.container > .cancelButton:focused {
+  -fx-background-color: -fx-info;
+  -fx-text-fill: -fx-white;
+}
+
+.textInputDialog .optionalButton {
+  -fx-background-color: -fx-transparent;
+  -fx-background-radius: 0.5em;
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.25em;
+  -fx-text-fill: -fx-primary;
+  -fx-border-color: -fx-primary;
+  -fx-border-radius: 0.5em;
+  -fx-padding: 0.5em 0.75em;
+  -fx-cursor: hand;
+}
+
+.textInputDialog .optionalButton:hover {
+  -fx-background-color: -fx-primary;
+  -fx-text-fill: -fx-white;
+}
+
+.textInputDialog .optionalButton:hover .glyph {
+  -fx-fill: white;
+}

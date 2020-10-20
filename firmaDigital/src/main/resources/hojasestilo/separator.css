@@ -1,0 +1,5 @@
+.separator .line {
+	-fx-border-color: #999;
+	-fx-border-radius: 2;
+	-fx-border-width: 1;
+}

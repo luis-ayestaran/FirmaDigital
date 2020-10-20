@@ -1,0 +1,120 @@
+.label {
+	-fx-font-family: "SF Pro Display Medium";
+	-fx-font-size: 1.25em;
+}
+
+.label.label-light {
+	-fx-font-family: "SF Pro Display Light";
+}
+
+.label.label-regular {
+	-fx-font-family: "SF Pro Display Regular";
+}
+
+.label.label-medium {
+	-fx-font-family: "SF Pro Display Medium";
+}
+
+.label.label-bold {
+	-fx-font-family: "SF Pro Display Bold";
+}
+
+.text-white {
+  -fx-text-fill: -fx-white;
+}
+
+.text-light {
+  -fx-text-fill: -fx-light;
+}
+
+.text-primary {
+  -fx-text-fill: -fx-primary;
+}
+
+.text-secondary {
+  -fx-text-fill: -fx-secondary;
+}
+
+.text-info {
+  -fx-text-fill: -fx-info;
+}
+
+.text-dark {
+  -fx-text-fill: -fx-dark;
+}
+
+.text-black {
+  -fx-text-fill: -fx-black;
+}
+
+/* ----------------------- */
+
+.text-left {
+  -fx-text-alignment: left;
+}
+
+.text-center {
+  -fx-text-alignment: center;
+}
+
+.text-right {
+  -fx-text-alignment: right;
+}
+
+.text-justify {
+  -fx-text-alignment: justify;
+}
+
+/* ----------------------- */
+
+.title-xsm {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 2em;
+}
+
+.title-sm {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 2.25em;
+}
+
+.title-md {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 2.5em;
+}
+
+.title-lg {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 2.75em;
+}
+
+.title-xlg {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 3em;
+}
+
+/* ----------------------- */
+
+.title-lighter-font-xsm {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-font-size: 2em;
+}
+
+.title-lighter-font-sm {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-font-size: 2.25em;
+}
+
+.title-lighter-font-md {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-font-size: 2.5em;
+}
+
+.title-lighter-font-lg {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-font-size: 2.75em;
+}
+
+.title-lighter-font-xlg {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-font-size: 3em;
+}

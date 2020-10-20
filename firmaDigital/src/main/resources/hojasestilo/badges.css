@@ -1,0 +1,56 @@
+.badge {
+  -fx-background-radius: 0.5em;
+  -fx-border-radius: 0.5em;
+  -fx-border-width: 1.5px;
+  -fx-padding: 0.25em 0.35em;
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.15em;
+}
+
+.badge-primary {
+  -fx-text-fill: -fx-white;
+  -fx-background-color: -fx-primary;
+}
+
+.badge-primary-outlined {
+  -fx-text-fill: -fx-primary;
+  -fx-background-color: -fx-transparent;
+  -fx-border-color: -fx-primary;
+}
+
+.badge-secondary {
+  -fx-text-fill: -fx-white;
+  -fx-background-color: -fx-secondary;
+}
+
+.badge-secondary-outlined {
+  -fx-text-fill: -fx-secondary;
+  -fx-background-color: -fx-transparent;
+  -fx-border-color: -fx-secondary;
+}
+
+.badge-warning {
+  -fx-text-fill: -fx-white;
+  -fx-background-color: -fx-warning;
+}
+
+.badge-warning-outlined {
+  -fx-text-fill: -fx-warning;
+  -fx-background-color: -fx-transparent;
+  -fx-border-color: -fx-warning;
+}
+
+.badge-danger {
+  -fx-text-fill: -fx-white;
+  -fx-background-color: -fx-danger;
+}
+
+.badge-info {
+  -fx-text-fill: -fx-white;
+  -fx-background-color: -fx-info;
+}
+
+.badge-success {
+  -fx-text-fill: -fx-white;
+  -fx-background-color: -fx-dark-success;
+}

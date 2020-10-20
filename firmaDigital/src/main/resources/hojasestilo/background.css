@@ -1,0 +1,133 @@
+/* ------------------------------------ */
+
+.bg-abstract {
+  -fx-background-image: url('imagenes/background-1.png');
+  -fx-background-size: cover;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+}
+
+.bg-glass {
+  -fx-background-color: #ffffff99;
+}
+
+.bg-white {
+  -fx-background-color: -fx-white;
+}
+
+.bg-light {
+  -fx-background-color: -fx-background-light;
+}
+
+.bg-primary {
+  -fx-background-color: -fx-primary;
+}
+
+.bg-secondary {
+  -fx-background-color: -fx-secondary;
+}
+
+.bg-success {
+  -fx-background-color: -fx-success;
+}
+
+.bg-warning {
+  -fx-background-color: -fx-warning;
+}
+
+.bg-danger {
+  -fx-background-color: -fx-danger;
+}
+
+.bg-info {
+  -fx-background-color: -fx-info;
+}
+
+.bg-dark {
+  -fx-background-color: -fx-background-dark;
+}
+
+.bg-black {
+  -fx-background-color: -fx-black;
+}
+
+/* ------------------------------------ */
+
+/* GENERAL ROUNDED CORNERS */
+
+.rounded-1 {
+  -fx-background-radius: 12px;
+}
+
+.rounded-2 {
+  -fx-background-radius: 24px;
+}
+
+.rounded-3 {
+  -fx-background-radius: 36px;
+}
+
+/* TOP ROUNDED CORNERS */
+
+.rounded-top-1 {
+  -fx-background-radius: 12px 12px 0 0;
+}
+
+.rounded-top-2 {
+  -fx-background-radius: 24px 24px 0 0;
+}
+
+.rounded-top-3 {
+  -fx-background-radius: 36px 36px 0 0;
+}
+
+/* BOTTOM ROUNDED CORNERS */
+
+.rounded-bottom-1 {
+  -fx-background-radius: 0 0 12px 12px;
+}
+
+.rounded-bottom-2 {
+  -fx-background-radius: 0 0 24px 24px;
+}
+
+.rounded-bottom-3 {
+  -fx-background-radius: 0 0 36px 36px;
+}
+
+/* RIGHT ROUNDED CORNERS */
+
+.rounded-right-1 {
+  -fx-background-radius: 0 12px 12px 0;
+}
+
+.rounded-right-2 {
+  -fx-background-radius: 0 24px 24px 0;
+}
+
+.rounded-right-3 {
+  -fx-background-radius: 0 36px 36px 0;
+}
+
+/* LEFT ROUNDED CORNERS */
+
+.rounded-left-1 {
+  -fx-background-radius: 12px 0 0 12px;
+}
+
+.rounded-left-2 {
+  -fx-background-radius: 24px 0 0 24px;
+}
+
+.rounded-left-3 {
+  -fx-background-radius: 36px 0 0 36px;
+}
+
+/* -------------------------- */
+
+.brand-watermark {
+  -fx-background-image: url('images/alora-icon-positive.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: right center;
+  -fx-opacity: 0.5;
+}

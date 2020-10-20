@@ -1,0 +1,7 @@
+.panels {
+  -fx-background-color: -fx-dark;
+  -fx-border-radius: 12px;
+  -fx-background-radius: 12px;
+  -fx-padding: 0.5em 1.25em 1em 1.25em;
+  -fx-effect: dropshadow( gaussian, -fx-dark-shadow, 24, 0, 0, 10);
+}

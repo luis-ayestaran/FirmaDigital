@@ -1,0 +1,73 @@
+.text-field {
+  -fx-font-family: "SF Pro Display Medium";
+  -fx-accent: -fx-primary;
+  -fx-background-color: -fx-text-field-bg;
+  -fx-background-radius: 0.7em;
+  -fx-border-color: -fx-transparent;
+  -fx-border-radius: 0.6em;
+  -fx-border-width: 2.5px;
+  -fx-text-fill: -fx-white;
+  -fx-prompt-text-fill: -fx-info;
+  -fx-padding: 0.45em 0.45em;
+}
+
+
+.text-field:focused {
+    /*-fx-background-color: -fx-background-dark;*/
+    -fx-border-color: derive(-fx-primary, 50%);
+    /*-fx-effect: dropshadow( gaussian, -fx-primary, 5, 0, 0 , 0 );*/
+}
+
+.text-field:pressed {
+    -fx-effect: none;
+    -fx-border-color: -fx-text-field-border;
+}
+
+.text-field:disabled {
+	-fx-border-color: -fx-transparent;
+	-fx-background-color: -fx-background-dark;
+	-fx-text-fill: -fx-light;
+	-fx-opacity: 1;
+}
+
+.text-field.small {
+  -fx-font-size: 1.25em;
+}
+
+.text-field.medium {
+  -fx-font-size: 1.4em;
+}
+
+.text-field.large {
+  -fx-font-size: 1.55em;
+}
+
+.text-field.extra-large {
+  -fx-font-size: 2em;
+}
+
+.text-field.light {
+	-fx-font-family: "SF Pro Display Light";
+}
+
+.text-field.regular {
+	-fx-font-family: "SF Pro Display Regular";
+}
+
+.text-field.medium {
+	-fx-font-family: "SF Pro Display Medium";
+}
+
+.text-field.bold {
+	-fx-font-family: "SF Pro Display Bold";
+}
+
+.text-field.text-field-success {
+	-fx-background-color: -fx-success;
+	-fx-border-color: -fx-dark-success;
+}
+
+.text-field.text-field-danger {
+	-fx-background-color: -fx-danger;
+	-fx-border-color: -fx-dark-danger;
+}

@@ -1,0 +1,27 @@
+* {
+  -fx-primary: #416de5;
+  -fx-light-primary: #698be8;
+  -fx-success: #3db561;
+  -fx-dark-success: #0e8532;
+  -fx-info: #999;
+  -fx-warning: #ffb700;
+  -fx-dark-warning: #d09900;
+  -fx-darker-warning: #aa7a00;
+  -fx-danger: #e5653d;
+  -fx-dark-danger: #b51901;
+  -fx-light: #eee;
+  -fx-dark: #555;
+  -fx-white: white;
+  -fx-black: black;
+  -fx-transparent: transparent;
+  -fx-background-light: whitesmoke;
+  -fx-background-dark: #333;
+  -fx-panel-shadow: #00000022;
+  -fx-button-shadow: #00000033;
+  -fx-dark-shadow: #00000055;
+  -fx-text-field-bg: #444;
+  -fx-text-field-border: #999;
+  -fx-text-field-pressed: #777;
+  -fx-sea-green: #2bf09eff;
+  -fx-sea-blue: #09b0e7ff;
+}

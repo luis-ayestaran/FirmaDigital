@@ -1,0 +1,406 @@
+/* --------------------------------- MENU BUTTON BASE ------------------------- */
+
+.button {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-background-radius: 0.6em;
+  -fx-border-radius: 0.6em;
+  -fx-padding: 0.6em 0.8em;
+  -fx-focus-traversable: false;
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.35em;
+  -fx-cursor: hand;
+  /*-fx-effect: dropshadow(gaussian, -fx-button-shadow, 8, 0, 0, 3);*/
+}
+
+.button .glyph {
+  -fx-padding: 0 1em 0 0;
+  -fx-alignment: center-right;
+}
+
+.button:hover {
+  -fx-background-color: transparent;
+  /*-fx-effect: none;*/
+}
+
+.button:pressed {
+  -fx-background-color: transparent;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* PRIMARY */
+
+.primary-button {
+  -fx-background-color: -fx-primary;
+  -fx-text-fill: -fx-white;
+}
+
+.primary-button .glyph {
+  -fx-fill: -fx-white;
+}
+
+.primary-button:hover,
+.primary-button:focused {
+  -fx-background-color: -fx-light-primary;
+}
+
+/* PRIMARY OUTLINED */
+
+.primary-outlined-button {
+  -fx-border-color: -fx-primary;
+  -fx-text-fill: -fx-primary;
+}
+
+.primary-outlined-button .glyph {
+  -fx-fill: -fx-primary;
+}
+
+.primary-outlined-button:hover,
+.primary-outlined-button:focused {
+  -fx-background-color: -fx-primary;
+  -fx-text-fill: -fx-white;
+}
+
+.primary-outlined-button:hover .glyph,
+.primary-outlined-button:focused .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* PRIMARY NO BORDER */
+
+.primary-no-border-button {
+  -fx-text-fill: -fx-primary;
+}
+
+.primary-no-border-button .glyph {
+  -fx-fill: -fx-primary;
+}
+
+.primary-no-border-button:hover,
+.primary-no-border-button:focused {
+  -fx-border-color: -fx-light-primary;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* PRIMARY */
+
+.sea-button {
+  -fx-background-color: linear-gradient(to top right, -fx-sea-blue, -fx-sea-green);
+  -fx-text-fill: -fx-black;
+}
+
+.sea-button .glyph {
+  -fx-fill: -fx-black;
+}
+
+.sea-button:hover,
+.sea-button:focused {
+  -fx-background-color: linear-gradient(to top right, -fx-sea-blue, -fx-sea-green);
+}
+
+/* PRIMARY OUTLINED */
+
+.primary-outlined-button {
+  -fx-border-color: -fx-primary;
+  -fx-text-fill: -fx-primary;
+}
+
+.primary-outlined-button .glyph {
+  -fx-fill: -fx-primary;
+}
+
+.primary-outlined-button:hover,
+.primary-outlined-button:focused {
+  -fx-background-color: -fx-primary;
+  -fx-text-fill: -fx-white;
+}
+
+.primary-outlined-button:hover .glyph,
+.primary-outlined-button:focused .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* PRIMARY NO BORDER */
+
+.primary-no-border-button {
+  -fx-text-fill: -fx-primary;
+}
+
+.primary-no-border-button .glyph {
+  -fx-fill: -fx-primary;
+}
+
+.primary-no-border-button:hover,
+.primary-no-border-button:focused {
+  -fx-border-color: -fx-light-primary;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* SECONDARY */
+
+.secondary-button {
+  -fx-background-color: -fx-secondary;
+  -fx-text-fill: -fx-white;
+}
+
+.secondary-button .glyph {
+  -fx-fill: -fx-white;
+}
+
+.secondary-button:hover,
+.secondary-button:focused {
+  -fx-background-color: -fx-light-secondary;
+}
+
+/* SECONDARY OUTLINED */
+
+.secondary-outlined-button {
+  -fx-border-color: -fx-secondary;
+  -fx-text-fill: -fx-secondary;
+}
+
+.secondary-outlined-button .glyph {
+  -fx-fill: -fx-secondary;
+}
+
+.secondary-outlined-button:hover,
+.secondary-outlined-button:focused {
+  -fx-background-color: -fx-secondary;
+  -fx-text-fill: -fx-white;
+}
+
+.secondary-outlined-button:hover .glyph,
+.secondary-outlined-button:focused .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* SECONDARY NO BORDER */
+
+.secondary-no-border-button {
+  -fx-text-fill: -fx-secondary;
+}
+
+.secondary-no-border-button .glyph {
+  -fx-fill: -fx-secondary;
+}
+
+.secondary-no-border-button:hover,
+.secondary-no-border-button:focused {
+  -fx-border-color: -fx-light-secondary;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* SUCCESS */
+
+.success-button {
+  -fx-background-color: -fx-dark-success;
+  -fx-text-fill: -fx-white;
+}
+
+.success-button .glyph {
+  -fx-fill: -fx-white;
+}
+
+.success-button:hover,
+.success-button:focused {
+  -fx-background-color: -fx-light-success;
+}
+
+/* SUCCESS OUTLINED */
+
+.success-outlined-button {
+  -fx-border-color: -fx-dark-success;
+  -fx-text-fill: -fx-dark-success;
+}
+
+.success-outlined-button .glyph {
+  -fx-fill: -fx-dark-success;
+}
+
+.success-outlined-button:hover,
+.success-outlined-button:focused {
+  -fx-background-color: -fx-dark-success;
+  -fx-text-fill: -fx-white;
+}
+
+.success-outlined-button:hover .glyph,
+.success-outlined-button:focused .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* SUCCESS NO BORDER */
+
+.success-no-border-button {
+  -fx-text-fill: -fx-dark-success;
+}
+
+.success-no-border-button .glyph {
+  -fx-fill: -fx-dark-success;
+}
+
+.success-no-border-button:hover,
+.success-no-border-button:focused {
+  -fx-border-color: -fx-light-success;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* INFO */
+
+.info-button {
+  -fx-background-color: -fx-info;
+  -fx-text-fill: -fx-white;
+}
+
+.info-button .glyph {
+  -fx-fill: -fx-white;
+}
+
+.info-button:hover,
+.info-button:focused {
+  -fx-background-color: -fx-light-info;
+}
+
+/* INFO OUTLINED */
+
+.info-outlined-button {
+  -fx-border-color: -fx-info;
+  -fx-text-fill: -fx-info;
+}
+
+.info-outlined-button .glyph {
+  -fx-fill: -fx-info;
+}
+
+.info-outlined-button:hover,
+.info-outlined-button:focused {
+  -fx-background-color: -fx-info;
+  -fx-text-fill: -fx-white;
+}
+
+.info-outlined-button:hover .glyph,
+.info-outlined-button:focused {
+  -fx-fill: -fx-white;
+}
+
+/* INFO NO BORDER */
+
+.info-no-border-button {
+  -fx-text-fill: -fx-info;
+}
+
+.info-no-border-button .glyph {
+  -fx-fill: -fx-info;
+}
+
+.info-no-border-button:hover,
+.info-no-border-button:focused {
+  -fx-border-color: -fx-light-info;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* HELP BUTTON */
+
+.help-button .glyph {
+  -fx-fill: -fx-info;
+}
+
+.help-button:hover,
+.help-button:focused {
+  -fx-background-color: -fx-background-light;
+}
+
+.help-button:pressed {
+  -fx-background-color: -fx-light;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* ADD BUTTON */
+
+.add-button .glyph {
+  -fx-fill: -fx-dark-success;
+}
+
+.add-button:hover,
+.add-button:focused {
+  -fx-background-color: -fx-dark-success;
+}
+
+.add-button:hover .glyph,
+.add-button:focused .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* SUBSTRACT BUTTON */
+
+.substract-button .glyph {
+  -fx-fill: -fx-danger;
+}
+
+.substract-button:hover,
+.substract-button:focused {
+  -fx-background-color: -fx-danger;
+}
+
+.substract-button:hover .glyph,
+.substract-button:focused .glyph {
+  -fx-fill: -fx-white;
+}
+
+
+/* ------------------------------------------------------------------------- */
+
+.lighter-font {
+  -fx-font-family: "SF Pro Display Medium";
+}
+
+.shadowed {
+  -fx-effect: dropshadow(gaussian, -fx-button-shadow, 8, 0, 0, 3);
+}
+
+.hover-shadowed:hover,
+.hover-shadowed:focused {
+  -fx-effect: dropshadow(gaussian, -fx-button-shadow, 8, 0, 0, 3);
+}
+
+.button-display-right {
+  -fx-content-display: right;
+}
+
+.button-display-left {
+  -fx-content-display: left;
+}
+
+/* ------------ JFOENIX BUTTONS ------------------ */
+
+.jfx-button.raised {
+  -jfx-button-type: RAISED;
+}
+
+.jfx-button.flat {
+  -jfx-button-type: FLAT;
+}
+
+.focusable-button {
+  -fx-focus-traversable: true;
+}
+
+/* -------------- BUTTONS TEXT ------------------- */
+
+.button.button-sm {
+  -fx-font-size: 1.26em;
+}
+
+/* -------------- BUTTONS ROUNDED ------------------- */
+
+.button-rounded {
+	-fx-background-radius: 2em;
+	-fx-border-radius: 2em;
+}
+

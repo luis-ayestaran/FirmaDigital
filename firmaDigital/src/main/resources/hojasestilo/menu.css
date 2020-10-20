@@ -1,0 +1,206 @@
+/* --------------------------------- MENU BUTTON BASE ------------------------- */
+
+.menu-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0.5em;
+  -fx-border-width: 0;
+  -fx-padding: 0.3em;
+  -fx-focus-traversable: false;
+  -fx-alignment: center;
+  -fx-cursor: hand;
+}
+
+.menu-button:hover,
+.menu-button:showing {
+  -fx-background-color: -fx-light;
+}
+
+.menu-button > .label {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-text-fill: -fx-info;
+  -fx-font-size: 1.31em;
+}
+
+.menu-button .glyph {
+  -fx-fill: -fx-info;
+}
+
+.menu-button .arrow {
+  -fx-background-color: -fx-info;
+}
+
+/* ------------- PRIMARY STYLE --------------------- */
+
+.menu-button.primary {
+  -fx-background-color: -fx-light-primary;
+  -fx-background-radius: 0.5em;
+  -fx-border-width: 0;
+  -fx-padding: 0.3em;
+  -fx-focus-traversable: false;
+}
+
+.menu-button.primary:hover,
+.menu-button.primary:showing {
+  -fx-background-color: -fx-light-primary;
+}
+
+.menu-button.primary > .label {
+  -fx-text-fill: -fx-white;
+}
+
+.menu-button.primary .arrow {
+  -fx-background-color: -fx-white;
+}
+
+.menu-button.primary .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* Primary outlined */
+
+.menu-button.primary-outlined {
+  -fx-background-color: -fx-transparent;
+  -fx-background-radius: 0.5em;
+  -fx-border-color: -fx-light-primary;
+  -fx-border-radius: 0.5em;
+  -fx-border-width: 1;
+  -fx-padding: 0.3em;
+  -fx-focus-traversable: false;
+}
+
+.menu-button.primary-outlined:hover,
+.menu-button.primary-outlined:showing {
+  -fx-background-color: -fx-light-primary;
+}
+
+.menu-button.primary-outlined > .label {
+  -fx-text-fill: -fx-light-primary;
+}
+
+.menu-button.primary-outlined:hover .label,
+.menu-button.primary-outlined:showing .label {
+  -fx-text-fill: -fx-white;
+}
+
+.menu-button.primary-outlined .arrow {
+  -fx-background-color: -fx-light-primary;
+}
+
+.menu-button.primary-outlined:hover .arrow,
+.menu-button.primary-outlined:showing .arrow {
+  -fx-background-color: -fx-white;
+}
+
+.menu-button.primary-outlined .glyph {
+  -fx-fill: -fx-light-primary;
+}
+
+.menu-button.primary-outlined:hover .glyph,
+.menu-button.primary-outlined:showing .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* ------------- SECONDARY STYLE --------------------- */
+
+.menu-button.secondary {
+  -fx-background-color: -fx-primary;
+  -fx-background-radius: 0.5em;
+  -fx-border-width: 0;
+  -fx-padding: 0.3em;
+  -fx-focus-traversable: false;
+}
+
+.menu-button.secondary:hover,
+.menu-button.secondary:showing {
+  -fx-background-color: -fx-light-secondary;
+}
+
+.menu-button.secondary > .label {
+  -fx-text-fill: -fx-white;
+}
+
+.menu-button.secondary .arrow {
+  -fx-background-color: -fx-white;
+}
+
+.menu-button.secondary .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* Secondary outlined */
+
+.menu-button.secondary-outlined {
+  -fx-background-color: -fx-transparent;
+  -fx-background-radius: 0.5em;
+  -fx-border-color: -fx-primary;
+  -fx-border-radius: 0.5em;
+  -fx-border-width: 1;
+  -fx-padding: 0.3em;
+  -fx-focus-traversable: false;
+}
+
+.menu-button.secondary-outlined:hover,
+.menu-button.secondary-outlined:showing {
+  -fx-background-color: -fx-primary;
+}
+
+.menu-button.secondary-outlined > .label {
+  -fx-text-fill: -fx-primary;
+}
+
+.menu-button.secondary-outlined:hover > .label,
+.menu-button.secondary-outlined:showing > .label {
+  -fx-text-fill: -fx-white;
+}
+
+.menu-button.secondary-outlined .arrow {
+  -fx-background-color: -fx-primary;
+}
+
+.menu-button.secondary-outlined:hover .arrow,
+.menu-button.secondary-outlined:showing .arrow {
+  -fx-background-color: -fx-white;
+}
+
+.menu-button.secondary-outlined .glyph {
+  -fx-fill: -fx-primary;
+}
+
+.menu-button.secondary-outlined:hover .glyph,
+.menu-button.secondary-outlined:showing .glyph {
+  -fx-fill: -fx-white;
+}
+
+/* ------------------- CONTEXT MENU -------------------- */
+.context-menu {
+  -fx-padding: 0.6em;
+  -fx-border-width: 0;
+  -fx-border-color: -fx-transparent;
+  -fx-background-radius: 0.6em;
+  -fx-effect: dropshadow( gaussian, -fx-panel-shadow, 18, 0, 0, 4);
+}
+
+/* ------------------- MENU ITEMS ---------------------- */
+.menu-item {
+  -fx-cursor: hand;
+  -fx-padding: 0.6em 0.6em;
+  -fx-background-radius: 0.6em;
+}
+
+.menu-item:focused {
+     -fx-background-color: -fx-transparent;
+}
+
+.menu-item:hover {
+     -fx-background-color: linear-gradient(-fx-light-primary, -fx-primary);
+}
+
+.menu-item .label {
+    -fx-font-family: "SF Pro Display Bold";
+    -fx-font-size: 1.275em;
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-item:hover .label {
+     -fx-text-fill: -fx-white;
+}

@@ -1,0 +1,20 @@
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.3em;
+    -fx-border-color: -fx-info;
+    -fx-border-width: 2;
+    -fx-border-radius: 0.3em;
+}
+
+.check-box:hover .box {
+    
+}
+
+.check-box:selected .mark {
+    -fx-background-color: -fx-colour-white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: -fx-blue;
+}

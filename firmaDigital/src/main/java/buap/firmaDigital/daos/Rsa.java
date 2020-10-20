@@ -21,63 +21,66 @@ public class Rsa {
 	private static Cipher rsa;
 	
 	public String[] GeneraLlaves() throws Exception {
-        // Generar el par de claves
-     KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-     KeyPair keyPair = keyPairGenerator.generateKeyPair();
-     PublicKey publicKey = keyPair.getPublic();
-     PrivateKey privateKey = keyPair.getPrivate();
-       
-     // Se salva y recupera de fichero la clave publica
-     saveKey(publicKey, "publickey.dat");
-     // Se salva y recupera de fichero la clave privada
-     saveKey(privateKey, "privatekey.dat");
-     
-       byte[] publicKeyBytes = publicKey.getEncoded();
-        byte[] privateKeyBytes = privateKey.getEncoded();
-       String puK = new String(publicKeyBytes, StandardCharsets.UTF_8);
-       String prK = new String(privateKeyBytes, StandardCharsets.UTF_8);
+		
+		//Generar el par de claves
+		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+		KeyPair keyPair = keyPairGenerator.generateKeyPair();
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
+		
+		//Se salva y recupera de fichero la clave publica
+		saveKey(publicKey, "publickey.dat");
+		//Se salva y recupera de fichero la clave privada
+		saveKey(privateKey, "privatekey.dat");
+		
+		byte[] publicKeyBytes = publicKey.getEncoded();
+		byte[] privateKeyBytes = privateKey.getEncoded();
+		String puK = new String(publicKeyBytes, StandardCharsets.UTF_8);
+		String prK = new String(privateKeyBytes, StandardCharsets.UTF_8);
 
-     String[] llaves = { puK, prK };
-     return llaves;
-   } 
-	    
-	//Función HASH recibimos el mensaje, devolvemos el resumen
+		String[] llaves = { puK, prK };
+		return llaves;
+	}
 	
+	
+	//Función HASH recibimos el mensaje, devolvemos el resumen
 	public String hasheador(String tc) throws Exception {
+		
 		MessageDigest md = MessageDigest.getInstance("MD5");
-	      md.update(tc.getBytes());
-	      byte[] digest = md.digest();
+		md.update(tc.getBytes());
+		byte[] digest = md.digest();
 
-	      /* Se escribe byte a byte en hexadecimal
-	      System.out.println("Hexadecimal");
-	      for (byte b : digest) {
-	         System.out.print(Integer.toHexString(0xFF & b));
-	      }
-	      System.out.println();*/
+		/* Se escribe byte a byte en hexadecimal
+		 * System.out.println("Hexadecimal");
+		 * for (byte b : digest) {
+		 * 	System.out.print(Integer.toHexString(0xFF & b));
+		 * }
+		 * System.out.println();*/
 
-	      // Se escribe codificado base 64. Se necesita la librería
-	      // commons-codec-x.x.x.jar de Apache
-	      byte[] encoded = Base64.encodeBase64(digest);
-	     /* System.out.println("Codificado");
-	      System.out.println(new String(encoded));*/
-	      String Resumen = new String(encoded, StandardCharsets.UTF_8);
+		// Se escribe codificado base 64. Se necesita la librería
+		// commons-codec-x.x.x.jar de Apache
+		byte[] encoded = Base64.encodeBase64(digest);
+		/* System.out.println("Codificado");
+		 * System.out.println(new String(encoded));*/
+		String Resumen = new String(encoded, StandardCharsets.UTF_8);
 		return Resumen;
+		
 	}
 	    
 	//Firma digital Ciframos con el resumen y la Clave privada del emisor y se devuelve la Firma del emisor
-	    public String enfirma(String Resumen) throws Exception {
-	    	 PrivateKey privateKey;
-	    	 // Obtener la clase para encriptar/desencriptar
-	        rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+	public String enfirma(String Resumen) throws Exception {
+		PrivateKey privateKey;
+		// Obtener la clase para encriptar/desencriptar
+		rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
-	        // Texto a encriptar Resumen
-	        privateKey = loadPrivateKey("privatekey.dat");
+		// Texto a encriptar Resumen
+		privateKey = loadPrivateKey("privatekey.dat");
 
-	        // Se encripta
-	        rsa.init(Cipher.ENCRYPT_MODE, privateKey);
-	        // cambiamos a privada 
-	        byte[] encriptado = rsa.doFinal(Resumen.getBytes());
-	        byte[] encoded = Base64.encodeBase64(encriptado);
+		// Se encripta
+		rsa.init(Cipher.ENCRYPT_MODE, privateKey);
+		// cambiamos a privada 
+		byte[] encriptado = rsa.doFinal(Resumen.getBytes());
+		byte[] encoded = Base64.encodeBase64(encriptado);
 	        String firma = new String(encoded, StandardCharsets.UTF_8);
 			return firma;
 	    }
@@ -93,12 +96,14 @@ public class Rsa {
 	        String newResumen = new String(bytesDesencriptados);
 	    	return newResumen;
 	    }
+	    
 	    private static void saveKey(Key key, String fileName) throws Exception {
 	        byte[] publicKeyBytes = key.getEncoded();
 	        FileOutputStream fos = new FileOutputStream(fileName);
 	        fos.write(publicKeyBytes);
 	        fos.close();
-	     }
+	    }
+	    
 	    private static PublicKey loadPublicKey(String fileName) throws Exception {
 	        FileInputStream fis = new FileInputStream(fileName);
 	        int numBtyes = fis.available();

@@ -1,5 +1,19 @@
 package buap.firmaDigital.app;
 
-public class App {
+import buap.firmaDigital.vistas.FirmaDigital;
 
+public class App {
+	
+	public static void main(String args[]) {
+		
+		init(args);
+		
+	}
+	
+	private static void init(String args[]) {
+		
+		new FirmaDigital().lanzarVista(args);
+		
+	}
+	
 }

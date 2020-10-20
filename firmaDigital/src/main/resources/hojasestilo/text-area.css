@@ -1,0 +1,53 @@
+.text-area {
+  -fx-font-family: "SF Pro Display Bold";
+  -fx-font-size: 1.45em;
+  -fx-background-color: -fx-text-field-bg;
+  -fx-border-color: -fx-text-field-border;
+  -fx-border-width: 2.5px;
+  -fx-text-fill: -fx-light;
+  -fx-background-radius: 0.6em;
+  -fx-border-radius: 0.6em;
+  -fx-padding: 0.2em 0.1em;
+}
+
+.text-area .scroll-pane {
+  -fx-background-color: -fx-text-field-bg;
+  -fx-border-color: -fx-transparent;
+  -fx-border-width: 0;
+}
+
+.text-area .content {
+    -fx-font-family: "SF Pro Display Bold";
+    -fx-font-size: 1.45em;
+    -fx-accent: -fx-primary;
+    -fx-background-color: -fx-text-field-bg;
+}
+
+.text-area:focused {
+    -fx-background-color: -fx-background-dark;
+    -fx-border-color: derive(-fx-primary, 50%);
+}
+
+.text-area:focused .content {
+  -fx-background-color: -fx-background-dark;
+}
+
+.text-area:focused .scroll-pane {
+  -fx-background-color: -fx-white;
+  -fx-border-color: -fx-transparent;
+}
+
+.text-area:pressed {
+  -fx-background-color: -fx-text-field-pressed;
+  -fx-effect: none;
+  -fx-border-color: -fx-text-field-border;
+}
+
+.text-area:pressed .content {
+  -fx-background-color: -fx-text-field-pressed;
+}
+
+.text-area:pressed .scroll-pane {
+  -fx-background-color: -fx-text-field-pressed;
+  -fx-border-color: -fx-transparent;
+}

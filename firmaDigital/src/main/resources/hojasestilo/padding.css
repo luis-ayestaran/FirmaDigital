@@ -1,0 +1,153 @@
+/* --------------------------- GENERAL PADDING --------------------------- */
+
+.padding-1 {
+  -fx-padding: 12px;
+}
+
+.padding-2 {
+  -fx-padding: 24px;
+}
+
+.padding-3 {
+  -fx-padding: 36px;
+}
+
+.padding-4 {
+  -fx-padding: 48px;
+}
+
+.padding-5 {
+  -fx-padding: 60px;
+}
+
+/* --------------------------- VERTICAL PADDING --------------------------- */
+
+.padding-y-1 {
+  -fx-padding: 12px 0;
+}
+
+.padding-y-2 {
+  -fx-padding: 24px 0;
+}
+
+.padding-y-3 {
+  -fx-padding: 36px 0;
+}
+
+.padding-y-4 {
+  -fx-padding: 48px 0;
+}
+
+.padding-y-5 {
+  -fx-padding: 60px 0;
+}
+
+/* TOP */
+
+.padding-top-1 {
+  -fx-padding: 12px 0 0 0;
+}
+
+.padding-top-2 {
+  -fx-padding: 24px 0 0 0;
+}
+
+.padding-top-3 {
+  -fx-padding: 36px 0 0 0;
+}
+
+.padding-top-4 {
+  -fx-padding: 48px 0 0 0;
+}
+
+.padding-top-5 {
+  -fx-padding: 60px 0 0 0;
+}
+
+/* BOTTOM */
+
+.padding-bottom-1 {
+  -fx-padding: 0 0 12px 0;
+}
+
+.padding-bottom-2 {
+  -fx-padding: 0 0 24px 0;
+}
+
+.padding-bottom-3 {
+  -fx-padding: 0 0 36px 0;
+}
+
+.padding-bottom-4 {
+  -fx-padding: 0 0 48px 0;
+}
+
+.padding-bottom-5 {
+  -fx-padding: 0 0 60px 0;
+}
+
+/* --------------------------- HORIZONTAL PADDING --------------------------- */
+
+.padding-x-1 {
+  -fx-padding: 0 12px;
+}
+
+.padding-x-2 {
+  -fx-padding: 0 24px;
+}
+
+.padding-x-3 {
+  -fx-padding: 0 36px;
+}
+
+.padding-x-4 {
+  -fx-padding: 0 48px;
+}
+
+.padding-x-5 {
+  -fx-padding: 0 60px;
+}
+
+/* RIGHT */
+
+.padding-right-1 {
+  -fx-padding: 0 12px 0 0;
+}
+
+.padding-right-2 {
+  -fx-padding: 0 24px 0 0;
+}
+
+.padding-right-3 {
+  -fx-padding: 0 36px 0 0;
+}
+
+.padding-right-4 {
+  -fx-padding: 0 48px 0 0;
+}
+
+.padding-right-5 {
+  -fx-padding: 0 60px 0 0;
+}
+
+/* LEFT */
+
+.padding-left-1 {
+  -fx-padding: 0 0 0 12px;
+}
+
+.padding-left-2 {
+  -fx-padding: 0 0 0 24px;
+}
+
+.padding-left-3 {
+  -fx-padding: 0 0 0 36px;
+}
+
+.padding-left-4 {
+  -fx-padding: 0 0 0 48px;
+}
+
+.padding-left-5 {
+  -fx-padding: 0 0 0 60px;
+}
