@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import buap.firmaDigital.daos.Rsa;
 import buap.firmaDigital.vistas.Dialogs;
 import buap.firmaDigital.vistas.FirmaDigital;
 import javafx.fxml.FXML;
@@ -60,6 +61,13 @@ public class FirmaDigitalControlador implements Initializable {
 	public BorderPane panelAlicia;
 	
 	@FXML
+	public TextField txtLlavePublicaAlicia;
+	@FXML
+	public TextField txtLlavePrivadaAlicia;
+	@FXML
+	public TextField txtLlavePublicaBetoCopia;
+	
+	@FXML
 	public Label lblMensajeRecibido;
 	@FXML
 	public TextField txtMensajeRecibido;
@@ -76,12 +84,21 @@ public class FirmaDigitalControlador implements Initializable {
 	@FXML
 	public TextField txtMensajeAceptado;
 	
+	Rsa cifradorBeto;
+	Rsa cifradorAlicia;
+	
+	String llavePublicaBeto;
+	String llavePrivadaBeto;
+	String llavePublicaAlicia;
+	String llavePrivadaAlicia;
+	
 	// ---------------------- INICIALIZACIÓN ----------------------- //
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
-		
+		cifradorBeto = new Rsa();
+		cifradorAlicia = new Rsa();
 		
 	}
 	
@@ -89,11 +106,35 @@ public class FirmaDigitalControlador implements Initializable {
 	@FXML
 	protected void generarLlaves() {
 		
+		calculaLlaves();
 		efectosGenerarLlaves();
 		
 	}
 	
+	private void calculaLlaves() {
+		
+		try {
+			String[] llavesBeto = cifradorBeto.GeneraLlaves();
+			llavePublicaBeto = llavesBeto[0].trim();
+			llavePrivadaBeto = llavesBeto[1].trim();
+			String[] llavesAlicia = cifradorAlicia.GeneraLlaves();
+			llavePublicaAlicia = llavesAlicia[0].trim();
+			llavePrivadaAlicia = llavesAlicia[1].trim();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private void efectosGenerarLlaves() {
+		
+		txtLlavePublicaBeto.setText(llavePublicaBeto);
+		txtLlavePrivadaBeto.setText(llavePrivadaBeto);
+		txtLlavePublicaAliciaCopia.setText(llavePublicaAlicia);
+		txtLlavePublicaAlicia.setText(llavePublicaAlicia);
+		txtLlavePrivadaAlicia.setText(llavePrivadaBeto);
+		txtLlavePublicaBetoCopia.setText(llavePublicaBeto);
 		
 		btnGenerarLlaves.setDisable(true);
 		
@@ -206,11 +247,11 @@ public class FirmaDigitalControlador implements Initializable {
 		panelBeto.setEffect(null);
 		
 		if( txtMensajeClaro.getText().equals( txtMensajeAceptado.getText() ) ) {
-			Dialogs.acceptDialog("Mensaje Aceptado",
+			Dialogs.acceptDialog("Mensaje aceptado",
 					"Excelente, el mensaje llegó sin modificaciones.",
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, false);
 		} else {
-			Dialogs.acceptDialog("Mensaje No Aceptado",
+			Dialogs.acceptDialog("Mensaje no aceptado",
 					"Cuidado, parece que los mensajes no coinciden.",
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
 		}
