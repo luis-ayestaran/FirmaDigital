@@ -29,7 +29,7 @@ public class Rsa {
 	
 	private static Cipher rsa;
 	
-	public String[] GeneraLlaves() throws Exception {
+	public void GeneraLlaves() throws Exception {
         // Generar el par de claves
      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
      KeyPair keyPair = keyPairGenerator.generateKeyPair();
@@ -41,13 +41,13 @@ public class Rsa {
      // Se salva y recupera de fichero la clave privada
      saveKey(privateKey, "privatekey.dat");
      
-       byte[] publicKeyBytes = publicKey.getEncoded();
-        byte[] privateKeyBytes = privateKey.getEncoded();
-       String puK = new String(publicKeyBytes, StandardCharsets.UTF_8);
-       String prK = new String(privateKeyBytes, StandardCharsets.UTF_8);
+      // byte[] publicKeyBytes = publicKey.getEncoded();
+      //  byte[] privateKeyBytes = privateKey.getEncoded();
+      // String puK = new String(publicKeyBytes, StandardCharsets.UTF_8);
+      // String prK = new String(privateKeyBytes, StandardCharsets.UTF_8);
 
-     String[] llaves = { puK, prK };
-     return llaves;
+     //String[] llaves = { puK, prK };
+     //return llaves;
    } 
 	    
 	//Función HASH recibimos el mensaje, devolvemos el resumen
@@ -60,12 +60,12 @@ public class Rsa {
 	}
 	    
 	//Firma digital Ciframos con el resumen y la Clave privada del emisor y se devuelve la Firma del emisor
-	    public byte[] enfirma(byte[] Resumen) throws Exception {
-	    	 PrivateKey privateKey;
+	    public byte[] enfirma(byte[] Resumen, PrivateKey privateKey) throws Exception {
+	    	// PrivateKey privateKey;
 	    	 // Obtener la clase para encriptar/desencriptar
 	        rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	        // Texto a encriptar Resumen
-	        privateKey = loadPrivateKey("privatekey.dat");
+	        //privateKey = loadPrivateKey("privatekey.dat");
 	        // Se encripta
 	        rsa.init(Cipher.ENCRYPT_MODE, privateKey);
 	        // cambiamos a privada 
@@ -74,9 +74,9 @@ public class Rsa {
 			return encriptado;
 	    }
 	    
-	    public byte[] desFirma(byte[] firma ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-	    	PublicKey publicKey;
-	    	publicKey = loadPublicKey("publickey.dat");
+	    public byte[] desFirma(byte[] firma, PublicKey publicKey ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    	//PublicKey publicKey;
+	    	//publicKey = loadPublicKey("publickey.dat");
 	    	 rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	    	//se pasa string a bytes
 	    	//System.out.println(firm.length);
@@ -87,12 +87,12 @@ public class Rsa {
 	    	return newResumen;
 	    }
 	    
-	    public byte[] encriptaMensaje(String mensaje) throws Exception {
-	    	 PrivateKey privateKey;
+	    public byte[] encriptaMensaje(String mensaje, PrivateKey privateKey) throws Exception {
+	    	 //PrivateKey privateKey;
 	    	 // Obtener la clase para encriptar/desencriptar
 	        rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	        // Texto a encriptar Resumen
-	        privateKey = loadPrivateKey("privatekey.dat");
+	       // privateKey = loadPrivateKey("privatekey.dat");
 	        // Se encripta
 	        rsa.init(Cipher.ENCRYPT_MODE, privateKey);
 	        // cambiamos a privada 
@@ -102,9 +102,9 @@ public class Rsa {
 	    }
 	    
 	    
-	    public String desencriptaMensaje(byte[] mensajeEncriptado ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-	    	PublicKey publicKey;
-	    	publicKey = loadPublicKey("publickey.dat");
+	    public String desencriptaMensaje(byte[] mensajeEncriptado, PublicKey publicKey ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    	//PublicKey publicKey;
+	    	//publicKey = loadPublicKey("publickey.dat");
 	    	 rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	    	//se pasa string a bytes
 	    	//System.out.println(firm.length);
@@ -158,7 +158,16 @@ public class Rsa {
 	 public static void main(String[] args) throws Exception {
         Rsa rs = new Rsa();
         
-		String[] llaves = rs.GeneraLlaves();
+		rs.GeneraLlaves();
+		PrivateKey privateKeyA = loadPrivateKey("privatekey.dat");
+		PublicKey publicKeyA = loadPublicKey("publickey.dat");
+		
+		rs.GeneraLlaves();
+		PrivateKey privateKeyB = loadPrivateKey("privatekey.dat");
+		PublicKey publicKeyB = loadPublicKey("publickey.dat");
+		
+		
+		
 		byte[] hash = rs.hasheador("Hola perrito");
 		byte[] Elmensaje = rs.encriptaMensaje("Hola perrito");
 		String Lemensaje = rs.stringtobyte(Elmensaje);
