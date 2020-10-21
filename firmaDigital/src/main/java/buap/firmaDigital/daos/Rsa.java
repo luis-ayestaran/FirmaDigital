@@ -1,20 +1,29 @@
 package buap.firmaDigital.daos;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.codec.binary.Base64;
+
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class Rsa {
 	
@@ -43,10 +52,10 @@ public class Rsa {
 	    
 	//Función HASH recibimos el mensaje, devolvemos el resumen
 	
-	public String hasheador(String tc) throws Exception {
+	public byte[] hasheador(String tc) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 	      md.update(tc.getBytes());
-	      byte[] digest = md.digest();
+	      byte[] digest = md.digest(); //Mandamos el digest con algunos caracteres no visibles
 
 	      /* Se escribe byte a byte en hexadecimal
 	      System.out.println("Hexadecimal");
@@ -57,15 +66,15 @@ public class Rsa {
 
 	      // Se escribe codificado base 64. Se necesita la librería
 	      // commons-codec-x.x.x.jar de Apache
-	      byte[] encoded = Base64.encodeBase64(digest);
+	      //byte[] encoded = Base64.encodeBase64(digest);
 	     /* System.out.println("Codificado");
 	      System.out.println(new String(encoded));*/
-	      String Resumen = new String(encoded, StandardCharsets.UTF_8);
-		return Resumen;
+	     //String Resumen = new String(encoded, StandardCharsets.UTF_8);
+		return digest;
 	}
 	    
 	//Firma digital Ciframos con el resumen y la Clave privada del emisor y se devuelve la Firma del emisor
-	    public String enfirma(String Resumen) throws Exception {
+	    public byte[] enfirma(String Resumen) throws Exception {
 	    	 PrivateKey privateKey;
 	    	 // Obtener la clase para encriptar/desencriptar
 	        rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -77,16 +86,26 @@ public class Rsa {
 	        rsa.init(Cipher.ENCRYPT_MODE, privateKey);
 	        // cambiamos a privada 
 	        byte[] encriptado = rsa.doFinal(Resumen.getBytes());
-	        byte[] encoded = Base64.encodeBase64(encriptado);
-	        String firma = new String(encoded, StandardCharsets.UTF_8);
-			return firma;
+	     // Escribimos el encriptado para verlo, con caracteres visibles
+	        System.out.println("Encriptado 'enfirma': "+encriptado.length);
+	        for (byte b : encriptado) {
+	           System.out.print(Integer.toHexString(0xFF & b));
+	        }
+	        System.out.println();
+	        //byte[] encoded = Base64.encodeBase64(encriptado);
+	        //System.out.println("Encoded 'enfirma': "+encoded.length);
+	        //String firma = new String(encoded, StandardCharsets.UTF_8);
+			return encriptado;
 	    }
-	    public String desFirma(String firma )throws Exception {
+	    public String desFirma(String firma ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 	    	PublicKey publicKey;
 	    	publicKey = loadPublicKey("publickey.dat");
 	    	 rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	    	//se pasa string a bytes
 	    	byte[] firm = firma.getBytes();
+	    	
+	    	System.out.println(firm.length);
+	    	
 	    	// Se desencripta
 	        rsa.init(Cipher.DECRYPT_MODE, publicKey);
 	        byte[] bytesDesencriptados = rsa.doFinal(firm);
@@ -99,7 +118,7 @@ public class Rsa {
 	        fos.write(publicKeyBytes);
 	        fos.close();
 	     }
-	    private static PublicKey loadPublicKey(String fileName) throws Exception {
+	    private static PublicKey loadPublicKey(String fileName) throws FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 	        FileInputStream fis = new FileInputStream(fileName);
 	        int numBtyes = fis.available();
 	        byte[] bytes = new byte[numBtyes];
@@ -140,22 +159,21 @@ public class Rsa {
         System.out.println(mensaje);
         */
         String[] llaves = rs.GeneraLlaves();
-        String mensaje = rs.hasheador("Hola que tal?");
+        
+        //String mensaje = rs.hasheador("Hola que tal?");
         System.out.println("El hash");
-        System.out.println(mensaje);
-        String firma = rs.enfirma(mensaje);
+        //System.out.println(mensaje);
+        //String firma = rs.enfirma(mensaje);
         System.out.println("la vieja firma");
-        System.out.println(firma);
+        //System.out.println(firma);
         
-        String newResumen = rs.desFirma(firma);
+        //String newResumen = rs.desFirma(firma);
         System.out.println("la el nuevo hash");
-        System.out.println(newResumen);
+        //System.out.println(newResumen);
         
-        if(mensaje == newResumen) {
-        	System.out.println("Sí son iguales we");
-        }
-        
-        
+        //if(mensaje == newResumen) {
+        	//System.out.println("Sí son iguales we");
+        //}
         
     }
 	
