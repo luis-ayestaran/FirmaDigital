@@ -154,13 +154,24 @@ public class Rsa {
 	    	return new String(sb);
 	    }
 	    
-	/* 
-	 public static void main(String[] args) throws Exception {
+	
+	/* public static void main(String[] args) throws Exception {
         Rsa rs = new Rsa();
         
 		rs.GeneraLlaves();
 		PrivateKey privateKeyA = loadPrivateKey("privatekey.dat");
 		PublicKey publicKeyA = loadPublicKey("publickey.dat");
+		
+		byte[] privateKeyBytes = privateKeyA.getEncoded();
+		byte[] publicKeyBytes = publicKeyA.getEncoded();
+		
+		String privateA = rs.stringtobyte(privateKeyBytes);
+		String publicA = rs.stringtobyte(publicKeyBytes);
+		
+		System.out.println("Privada");
+		System.out.println(privateA);
+		System.out.println("Publica");
+		System.out.println(publicA);
 		
 		rs.GeneraLlaves();
 		PrivateKey privateKeyB = loadPrivateKey("privatekey.dat");
@@ -169,7 +180,7 @@ public class Rsa {
 		
 		
 		byte[] hash = rs.hasheador("Hola perrito");
-		byte[] Elmensaje = rs.encriptaMensaje("Hola perrito");
+		byte[] Elmensaje = rs.encriptaMensaje("Hola perrito", privateKeyA );
 		String Lemensaje = rs.stringtobyte(Elmensaje);
 		System.out.println("El mensaje Encriptado");
 		System.out.println(Lemensaje);
@@ -177,14 +188,14 @@ public class Rsa {
 		System.out.println("El hash");
 		System.out.println(mensaje);
 		
-		byte[] firma = rs.enfirma(hash);
+		byte[] firma = rs.enfirma(hash, privateKeyA);
 		String firmastring = rs.stringtobyte(firma);
 		System.out.println("La firma");
 		System.out.println(firmastring);
-		byte[] resumenRecibido = rs.desFirma(firma);
+		byte[] resumenRecibido = rs.desFirma(firma,publicKeyA);
 		
 		
-		String mensajeDesen  = rs.desencriptaMensaje(Elmensaje);
+		String mensajeDesen  = rs.desencriptaMensaje(Elmensaje,publicKeyA);
 		System.out.println("El mensaje desencriptado");
 		System.out.println(mensajeDesen);
 		
@@ -195,7 +206,7 @@ public class Rsa {
 		if(mensaje.equals(resumenRecibidostring) )
 			System.out.println("es igual");
 		else System.out.println("no es igual");        
-    } */
-	
+    } 
+	*/
 	 
 }
