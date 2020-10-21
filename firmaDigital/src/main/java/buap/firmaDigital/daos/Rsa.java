@@ -160,9 +160,12 @@ public class Rsa {
         	System.out.println("Sí son iguales we");
         }
         
-        
-        
     }
 	
-	 
+	public String byteToString(byte[] byteArray) {
+		
+		return new String(byteArray);
+		
+	}
+	
 }
