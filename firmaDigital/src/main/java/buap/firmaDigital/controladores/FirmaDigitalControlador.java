@@ -1,6 +1,8 @@
 package buap.firmaDigital.controladores;
 
 import java.net.URL;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -12,6 +14,7 @@ import buap.firmaDigital.vistas.FirmaDigital;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.BorderPane;
@@ -28,11 +31,11 @@ public class FirmaDigitalControlador implements Initializable {
 	public BorderPane panelBeto;
 	
 	@FXML
-	public TextField txtLlavePublicaBeto;
+	public TextArea txtLlavePublicaBeto;
 	@FXML
-	public TextField txtLlavePrivadaBeto;
+	public TextArea txtLlavePrivadaBeto;
 	@FXML
-	public TextField txtLlavePublicaAliciaCopia;
+	public TextArea txtLlavePublicaAliciaCopia;
 	
 	@FXML
 	public Label lblMensajeClaro;
@@ -61,11 +64,11 @@ public class FirmaDigitalControlador implements Initializable {
 	public BorderPane panelAlicia;
 	
 	@FXML
-	public TextField txtLlavePublicaAlicia;
+	public TextArea txtLlavePublicaAlicia;
 	@FXML
-	public TextField txtLlavePrivadaAlicia;
+	public TextArea txtLlavePrivadaAlicia;
 	@FXML
-	public TextField txtLlavePublicaBetoCopia;
+	public TextArea txtLlavePublicaBetoCopia;
 	
 	@FXML
 	public Label lblMensajeRecibido;
@@ -84,46 +87,84 @@ public class FirmaDigitalControlador implements Initializable {
 	@FXML
 	public TextField txtMensajeAceptado;
 	
-	Rsa cifradorBeto;
-	Rsa cifradorAlicia;
+	private Rsa cifrador;
 	
-	String llavePublicaBeto;
-	String llavePrivadaBeto;
-	String llavePublicaAlicia;
-	String llavePrivadaAlicia;
+	private PrivateKey privateKeyBeto;
+	private PublicKey publicKeyBeto;
+	private PrivateKey privateKeyAlicia;
+	private PublicKey publicKeyAlicia;
+	
+	private String llavePublicaBeto;
+	private String llavePrivadaBeto;
+	private String llavePublicaAlicia;
+	private String llavePrivadaAlicia;
+	private String mensajeClaro;
+	private String resumen;
+	private String firmaBeto;
+	private String mensajeCifradoEnviado;
+	private String mensajeCifradoRecibido;
+	
+	
+	private byte[] hash;
+	private byte[] firma;
+	
 	
 	// ---------------------- INICIALIZACIÓN ----------------------- //
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
-		cifradorBeto = new Rsa();
-		cifradorAlicia = new Rsa();
+		cifrador = new Rsa();
 		
 	}
 	
-	
+	//PASO 1: generación del par de llaves de Beto y el par de llaves de Alicia
 	@FXML
 	protected void generarLlaves() {
 		
-		calculaLlaves();
-		efectosGenerarLlaves();
+		try {
+			
+			calculaLlaves();
+			efectosGenerarLlaves();
+			
+		} catch (Exception e) {
+			Dialogs.acceptDialog("Error al generar llaves",
+					"Hubo un error al generar las llaves. Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+		}
 		
 	}
 	
-	private void calculaLlaves() {
-		
-		try {
-			String[] llavesBeto = cifradorBeto.GeneraLlaves();
-			llavePublicaBeto = llavesBeto[0].trim();
-			llavePrivadaBeto = llavesBeto[1].trim();
-			String[] llavesAlicia = cifradorAlicia.GeneraLlaves();
-			llavePublicaAlicia = llavesAlicia[0].trim();
-			llavePrivadaAlicia = llavesAlicia[1].trim();
+	//Método que genera las llaves pública y privada de Beto y Alicia
+	private void calculaLlaves() throws Exception {
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//GENERANDO LLAVES DE BETO
+		cifrador.generaLlaves();
+		privateKeyBeto = Rsa.loadPrivateKey("privatekey.dat");	//Llave privada de Beto
+		publicKeyBeto = Rsa.loadPublicKey("publickey.dat");		//Llave publica de Beto
+		
+		byte[] privateKeyBetoBytes = privateKeyBeto.getEncoded();	//Se transforma de un objeto llave a la codificacion primitiva
+		byte[] publicKeyBetoBytes = publicKeyBeto.getEncoded();		
+		
+		llavePrivadaBeto = cifrador.byteToString(privateKeyBetoBytes);
+		llavePublicaBeto = cifrador.byteToString(publicKeyBetoBytes);
+		
+		System.out.println("Llave privada de Beto\t\t" + llavePrivadaBeto);
+		System.out.println("Llave pública de Beto\t\t" + llavePublicaBeto + "\n");
+		
+		//GENERANDO LLAVES DE ALICIA
+		cifrador.generaLlaves();
+		privateKeyAlicia = Rsa.loadPrivateKey("privatekey.dat");	//Llave privada de Alicia
+		publicKeyAlicia = Rsa.loadPublicKey("publickey.dat");		//Llave publica de Alicia
+		
+		byte[] privateKeyAliciaBytes = privateKeyAlicia.getEncoded();
+		byte[] publicKeyAliciaBytes = publicKeyAlicia.getEncoded();
+		
+		llavePrivadaAlicia = cifrador.byteToString(privateKeyAliciaBytes);
+		llavePublicaAlicia = cifrador.byteToString(publicKeyAliciaBytes);
+		
+		System.out.println("Llave privada de Alicia\t\t" + llavePrivadaAlicia);
+		System.out.println("Llave pública de Alicia\t\t" + llavePublicaAlicia + "\n");
 		
 	}
 	
@@ -133,7 +174,7 @@ public class FirmaDigitalControlador implements Initializable {
 		txtLlavePrivadaBeto.setText(llavePrivadaBeto);
 		txtLlavePublicaAliciaCopia.setText(llavePublicaAlicia);
 		txtLlavePublicaAlicia.setText(llavePublicaAlicia);
-		txtLlavePrivadaAlicia.setText(llavePrivadaBeto);
+		txtLlavePrivadaAlicia.setText(llavePrivadaAlicia);
 		txtLlavePublicaBetoCopia.setText(llavePublicaBeto);
 		
 		btnGenerarLlaves.setDisable(true);
@@ -149,12 +190,32 @@ public class FirmaDigitalControlador implements Initializable {
 		
 	}
 	
+	
+	//PASO 2: Calcular el hash del mensaje que escribio Beto
 	@FXML
 	protected void calcularHash() {
-		
-		if( !txtMensajeClaro.getText().isEmpty() ) {
-			efectosCalcularHash();
+		try {
+			if( !txtMensajeClaro.getText().trim().isEmpty() ) {
+				aplicaHash();
+				efectosCalcularHash();
+			} else {
+				txtMensajeClaro.requestFocus();
+			}
+		} catch( Exception e ) {
+			Dialogs.acceptDialog("Error al calcular hash",
+					"Hubo un error al calcular el hash del mensaje. Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
 		}
+		
+	}
+	
+	private void aplicaHash() throws Exception {
+		
+		mensajeClaro = txtMensajeClaro.getText().trim();
+		hash = cifrador.hasheador( mensajeClaro );
+		resumen = cifrador.byteToString(hash).trim();
+		System.out.println("Resumen del mensaje\t\t" + resumen + "\n");
+		txtResumen.setText(resumen);
 		
 	}
 	
@@ -174,7 +235,36 @@ public class FirmaDigitalControlador implements Initializable {
 	@FXML
 	protected void firmarMensaje() {
 		
-		efectosFirmarMensaje();
+		try {
+			
+			aplicaFirma();
+			cifraMensaje();
+			efectosFirmarMensaje();
+			
+		} catch( Exception e ) {
+			Dialogs.acceptDialog("Error al firmar el mensaje",
+					"Hubo un error al firmar el mensaje. Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void aplicaFirma() throws Exception {
+		
+		firma = cifrador.enfirma(hash, privateKeyBeto);
+		firmaBeto = cifrador.byteToString(firma).trim();
+		txtMensajeFirmado.setText(firmaBeto);
+		System.out.println("Firma de Beto\t\t\t" + firmaBeto + "\n");
+		
+	}
+	
+	private void cifraMensaje() throws Exception {
+		
+		byte[] mensaje = cifrador.encriptaMensaje(mensajeClaro, publicKeyAlicia );
+		mensajeCifradoEnviado = cifrador.byteToString(mensaje);
+		txtMensajeFirmado.appendText("," + mensajeCifradoEnviado);
+		System.out.println("Mensaje cifrado enviado\t\t" + mensajeCifradoEnviado + "\n");
 		
 	}
 	
@@ -194,22 +284,57 @@ public class FirmaDigitalControlador implements Initializable {
 	@FXML
 	protected void enviarMensaje() {
 		
-		Random generadorRandom = new Random();
-		if(generadorRandom.nextBoolean()) {
-			interceptarMensaje();
-		}
+		System.out.println("\n\n------------------ BETO ENVÍA MENSAJE A ALICIA ---------------\n");
+		
+		enviar(firmaBeto, mensajeCifradoEnviado);
+		recibir(firmaBeto, mensajeCifradoRecibido);
 		efectosEnviarMensaje();
 		
 	}
 	
-	private void interceptarMensaje() {
-		Dialogs.inputDialog(
-				FirmaDigital.getStage(),
-				"Mensaje interceptado",
-				"Interceptaste un mensaje",
-				"El contenido del mensaje es el siguiente:",
-				txtMensajeFirmado.getText()
+	private void enviar(String firmaEmisor, String mensajeCifrado) {
+		
+		Random generadorRandom = new Random();
+		if(generadorRandom.nextBoolean()) {
+			
+			System.out.println("\n El mensaje fue interceptado por un hacker \n");
+			String mensajeInterceptado = interceptarMensaje();
+			
+			if(	mensajeInterceptado != null ) {
+				
+				mensajeCifradoRecibido = mensajeInterceptado;
+				
+			} else {
+				
+				mensajeCifradoRecibido = mensajeCifradoEnviado;
+				
+			}
+			
+		} else {
+			
+			mensajeCifradoRecibido = mensajeCifradoEnviado;
+			
+		}
+		
+	}
+	
+	private String interceptarMensaje() {
+		
+		return Dialogs.inputDialog (
+			FirmaDigital.getStage(),
+			"Mensaje interceptado",
+			"Interceptaste un mensaje",
+			"El contenido del mensaje es el siguiente:",
+			mensajeCifradoEnviado
 		);
+		
+	}
+	
+	private void recibir(String firmaEmisor, String mensajeCifrado) {
+		txtMensajeRecibido.setText(firmaEmisor + "," + mensajeCifrado);
+		System.out.println("Firma recibida\t\t" + firmaBeto + "\n");
+		System.out.println("Mensaje cifrado recibido\t\t" + mensajeCifradoRecibido + "\n");
+		
 	}
 	
 	private void efectosEnviarMensaje() {
@@ -242,11 +367,9 @@ public class FirmaDigitalControlador implements Initializable {
 		txtMensajeRecibido.setDisable(true);
 		btnDescifrar.setDisable(true);
 		
-		
-		
 		panelBeto.setEffect(null);
 		
-		if( txtMensajeClaro.getText().equals( txtMensajeAceptado.getText() ) ) {
+		if( txtMensajeClaro.getText().trim().equals( txtMensajeAceptado.getText().trim() ) ) {
 			Dialogs.acceptDialog("Mensaje aceptado",
 					"Excelente, el mensaje llegó sin modificaciones.",
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, false);

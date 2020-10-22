@@ -29,7 +29,7 @@ public class Rsa {
 	
 	private static Cipher rsa;
 	
-	public void GeneraLlaves() throws Exception {
+	public void generaLlaves() throws Exception {
         // Generar el par de claves
      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
      KeyPair keyPair = keyPairGenerator.generateKeyPair();
@@ -87,14 +87,14 @@ public class Rsa {
 	    	return newResumen;
 	    }
 	    
-	    public byte[] encriptaMensaje(String mensaje, PrivateKey privateKey) throws Exception {
+	    public byte[] encriptaMensaje(String mensaje, PublicKey publicKey) throws Exception {
 	    	 //PrivateKey privateKey;
 	    	 // Obtener la clase para encriptar/desencriptar
 	        rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	        // Texto a encriptar Resumen
 	       // privateKey = loadPrivateKey("privatekey.dat");
 	        // Se encripta
-	        rsa.init(Cipher.ENCRYPT_MODE, privateKey);
+	        rsa.init(Cipher.ENCRYPT_MODE, publicKey);
 	        // cambiamos a privada 
 	        byte[] encriptado = rsa.doFinal(mensaje.getBytes());
 	     
@@ -122,7 +122,7 @@ public class Rsa {
 	        fos.write(publicKeyBytes);
 	        fos.close();
 	     }
-	    private static PublicKey loadPublicKey(String fileName) throws FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    public static PublicKey loadPublicKey(String fileName) throws FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 	        FileInputStream fis = new FileInputStream(fileName);
 	        int numBtyes = fis.available();
 	        byte[] bytes = new byte[numBtyes];
@@ -134,7 +134,7 @@ public class Rsa {
 	        PublicKey keyFromBytes = keyFactory.generatePublic(keySpec);
 	        return keyFromBytes;
 	     }
-	    private static PrivateKey loadPrivateKey(String fileName) throws Exception {
+	    public static PrivateKey loadPrivateKey(String fileName) throws Exception {
 	        FileInputStream fis = new FileInputStream(fileName);
 	        int numBtyes = fis.available();
 	        byte[] bytes = new byte[numBtyes];
@@ -146,7 +146,7 @@ public class Rsa {
 	        PrivateKey keyFromBytes = keyFactory.generatePrivate(keySpec);
 	        return keyFromBytes;
 	     }
-	    public String stringtobyte(byte[] arrayByte) {
+	    public String byteToString(byte[] arrayByte) {
 	    	StringBuilder sb = new StringBuilder();
 	    	for (byte b : arrayByte) {
 	    		sb.append(Integer.toHexString(0xFF & b));
@@ -155,41 +155,62 @@ public class Rsa {
 	    }
 	    
 	
-	 public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
         Rsa rs = new Rsa();
         
-		rs.GeneraLlaves();
+		rs.generaLlaves();
 		PrivateKey privateKeyA = loadPrivateKey("privatekey.dat");
 		PublicKey publicKeyA = loadPublicKey("publickey.dat");
 		
-		rs.GeneraLlaves();
+		byte[] privateKeyABytes = privateKeyA.getEncoded();
+		byte[] publicKeyABytes = publicKeyA.getEncoded();
+		
+		String privateA = rs.byteToString(privateKeyABytes);
+		String publicA = rs.byteToString(publicKeyABytes);
+		
+		System.out.println("Privada Beto");
+		System.out.println(privateA);
+		System.out.println("Publica Beto");
+		System.out.println(publicA + "\n");
+		
+		rs.generaLlaves();
 		PrivateKey privateKeyB = loadPrivateKey("privatekey.dat");
 		PublicKey publicKeyB = loadPublicKey("publickey.dat");
 		
+		byte[] privateKeyBBytes = privateKeyB.getEncoded();
+		byte[] publicKeyBBytes = publicKeyB.getEncoded();
 		
+		String privateB = rs.byteToString(privateKeyBBytes);
+		String publicB = rs.byteToString(publicKeyBBytes);
+		
+		System.out.println("Privada Alicia");
+		System.out.println(privateB);
+		System.out.println("Publica Alicia");
+		System.out.println(publicB + "\n");
 		
 		byte[] hash = rs.hasheador("Hola perrito");
-		byte[] Elmensaje = rs.encriptaMensaje("Hola perrito");
-		String Lemensaje = rs.stringtobyte(Elmensaje);
-		System.out.println("El mensaje Encriptado");
-		System.out.println(Lemensaje);
-		String mensaje = rs.stringtobyte(hash);
+		String mensaje = rs.byteToString(hash);
 		System.out.println("El hash");
 		System.out.println(mensaje);
 		
-		byte[] firma = rs.enfirma(hash);
-		String firmastring = rs.stringtobyte(firma);
+		byte[] Elmensaje = rs.encriptaMensaje("Hola perrito", publicKeyB );
+		String Lemensaje = rs.byteToString(Elmensaje);
+		System.out.println("El mensaje Encriptado");
+		System.out.println(Lemensaje);
+		
+		byte[] firma = rs.enfirma(hash, privateKeyA);
+		String firmastring = rs.byteToString(firma);
 		System.out.println("La firma");
 		System.out.println(firmastring);
-		byte[] resumenRecibido = rs.desFirma(firma);
+		byte[] resumenRecibido = rs.desFirma(firma,publicKeyA);
 		
 		
-		String mensajeDesen  = rs.desencriptaMensaje(Elmensaje);
+		String mensajeDesen  = rs.desencriptaMensaje(Elmensaje,publicKeyA);
 		System.out.println("El mensaje desencriptado");
 		System.out.println(mensajeDesen);
 		
 		
-		String resumenRecibidostring = rs.stringtobyte(resumenRecibido);
+		String resumenRecibidostring = rs.byteToString(resumenRecibido);
 		System.out.println("El nuevo resumen");
 		System.out.println(resumenRecibidostring);
 		if(mensaje.equals(resumenRecibidostring) )

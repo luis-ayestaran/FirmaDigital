@@ -12,13 +12,15 @@
 }
 
 
-.text-field:focused {
+.text-field:focused,
+.text-field.text-field-dark:focused {
     /*-fx-background-color: -fx-background-dark;*/
     -fx-border-color: derive(-fx-primary, 50%);
     /*-fx-effect: dropshadow( gaussian, -fx-primary, 5, 0, 0 , 0 );*/
 }
 
-.text-field:pressed {
+.text-field:pressed,
+.text-field.text-field-dark:pressed {
     -fx-effect: none;
     -fx-border-color: -fx-text-field-border;
 }
@@ -70,4 +72,9 @@
 .text-field.text-field-danger {
 	-fx-background-color: -fx-danger;
 	-fx-border-color: -fx-dark-danger;
+}
+
+.text-field.text-field-dark {
+	-fx-background-color: -fx-background-dark;
+	-fx-border-color: -fx-transparent;
 }
