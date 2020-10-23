@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -17,7 +18,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.nio.charset.StandardCharsets;
 //import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.BadPaddingException;
@@ -102,14 +102,14 @@ public class Rsa {
 	    }
 	    
 	    
-	    public String desencriptaMensaje(byte[] mensajeEncriptado, PublicKey publicKey ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    public String desencriptaMensaje(byte[] mensajeEncriptado, PrivateKey privateKeyReceptor ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 	    	//PublicKey publicKey;
 	    	//publicKey = loadPublicKey("publickey.dat");
 	    	 rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	    	//se pasa string a bytes
 	    	//System.out.println(firm.length);
 	    	// Se desencripta
-	        rsa.init(Cipher.DECRYPT_MODE, publicKey);
+	        rsa.init(Cipher.DECRYPT_MODE, privateKeyReceptor);
 	        byte[] newMensaje = rsa.doFinal(mensajeEncriptado);
 	        String mensajeDesen = new String(newMensaje);
 	    	return mensajeDesen;
@@ -146,12 +146,14 @@ public class Rsa {
 	        PrivateKey keyFromBytes = keyFactory.generatePrivate(keySpec);
 	        return keyFromBytes;
 	     }
-	    public String byteToString(byte[] arrayByte) {
+	    public String byteToString(byte[] arrayByte) throws UnsupportedEncodingException {
 	    	StringBuilder sb = new StringBuilder();
 	    	for (byte b : arrayByte) {
 	    		sb.append(Integer.toHexString(0xFF & b));
 		      }
 	    	return new String(sb);
+	    	//return new String(arrayByte);
+	    	
 	    }
 	    
 	
@@ -205,7 +207,7 @@ public class Rsa {
 		byte[] resumenRecibido = rs.desFirma(firma,publicKeyA);
 		
 		
-		String mensajeDesen  = rs.desencriptaMensaje(Elmensaje,publicKeyA);
+		String mensajeDesen  = rs.desencriptaMensaje(Elmensaje, privateKeyB);
 		System.out.println("El mensaje desencriptado");
 		System.out.println(mensajeDesen);
 		

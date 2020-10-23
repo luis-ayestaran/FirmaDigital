@@ -1,16 +1,26 @@
 package buap.firmaDigital.controladores;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import com.jfoenix.controls.JFXButton;
 
 import buap.firmaDigital.daos.Rsa;
 import buap.firmaDigital.vistas.Dialogs;
 import buap.firmaDigital.vistas.FirmaDigital;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -99,14 +109,19 @@ public class FirmaDigitalControlador implements Initializable {
 	private String llavePublicaAlicia;
 	private String llavePrivadaAlicia;
 	private String mensajeClaro;
-	private String resumen;
-	private String firmaBeto;
+	private String resumenEnviado;
+	private String resumenRecibido;
+	private String firmaEnviada;
+	private String firmaRecibida;
 	private String mensajeCifradoEnviado;
 	private String mensajeCifradoRecibido;
+	private String mensajeDescifradoRecibido;
 	
-	
-	private byte[] hash;
-	private byte[] firma;
+	private byte[] hashEmisor;
+	private byte[] hashReceptor;
+	private byte[] firmaEmisor;
+	private byte[] mensajeCifrado;
+	private byte[] mensajeDescifrado;
 	
 	
 	// ---------------------- INICIALIZACIÓN ----------------------- //
@@ -125,7 +140,10 @@ public class FirmaDigitalControlador implements Initializable {
 		try {
 			
 			calculaLlaves();
-			efectosGenerarLlaves();
+			Platform.runLater(() -> {
+				limpiarCampos();
+				efectosGenerarLlaves();
+			});
 			
 		} catch (Exception e) {
 			Dialogs.acceptDialog("Error al generar llaves",
@@ -168,6 +186,17 @@ public class FirmaDigitalControlador implements Initializable {
 		
 	}
 	
+	private void limpiarCampos() {
+		
+		txtMensajeClaro.clear();
+		txtResumen.clear();
+		txtMensajeFirmado.clear();
+		txtMensajeRecibido.clear();
+		txtFirmaDescrifrada.clear();
+		txtMensajeAceptado.clear();
+		
+	}
+	
 	private void efectosGenerarLlaves() {
 		
 		txtLlavePublicaBeto.setText(llavePublicaBeto);
@@ -196,8 +225,11 @@ public class FirmaDigitalControlador implements Initializable {
 	protected void calcularHash() {
 		try {
 			if( !txtMensajeClaro.getText().trim().isEmpty() ) {
-				aplicaHash();
-				efectosCalcularHash();
+				mensajeClaro = txtMensajeClaro.getText().trim();
+				aplicaHash(mensajeClaro);
+				Platform.runLater(() -> {
+					efectosCalcularHash();
+				});
 			} else {
 				txtMensajeClaro.requestFocus();
 			}
@@ -209,13 +241,12 @@ public class FirmaDigitalControlador implements Initializable {
 		
 	}
 	
-	private void aplicaHash() throws Exception {
+	private void aplicaHash(String mensajeClaro) throws Exception {
 		
-		mensajeClaro = txtMensajeClaro.getText().trim();
-		hash = cifrador.hasheador( mensajeClaro );
-		resumen = cifrador.byteToString(hash).trim();
-		System.out.println("Resumen del mensaje\t\t" + resumen + "\n");
-		txtResumen.setText(resumen);
+		hashEmisor = cifrador.hasheador( mensajeClaro );
+		resumenEnviado = cifrador.byteToString(hashEmisor).trim();
+		System.out.println("Resumen del mensaje\t\t" + resumenEnviado + "\n");
+		txtResumen.setText(resumenEnviado);
 		
 	}
 	
@@ -239,7 +270,9 @@ public class FirmaDigitalControlador implements Initializable {
 			
 			aplicaFirma();
 			cifraMensaje();
-			efectosFirmarMensaje();
+			Platform.runLater(() -> {
+				efectosFirmarMensaje();
+			});
 			
 		} catch( Exception e ) {
 			Dialogs.acceptDialog("Error al firmar el mensaje",
@@ -252,17 +285,17 @@ public class FirmaDigitalControlador implements Initializable {
 	
 	private void aplicaFirma() throws Exception {
 		
-		firma = cifrador.enfirma(hash, privateKeyBeto);
-		firmaBeto = cifrador.byteToString(firma).trim();
-		txtMensajeFirmado.setText(firmaBeto);
-		System.out.println("Firma de Beto\t\t\t" + firmaBeto + "\n");
+		firmaEmisor = cifrador.enfirma(hashEmisor, privateKeyBeto);
+		firmaEnviada = cifrador.byteToString(firmaEmisor).trim();
+		txtMensajeFirmado.setText(firmaEnviada);
+		System.out.println("Firma de Beto\t\t\t" + firmaEnviada + "\n");
 		
 	}
 	
 	private void cifraMensaje() throws Exception {
 		
-		byte[] mensaje = cifrador.encriptaMensaje(mensajeClaro, publicKeyAlicia );
-		mensajeCifradoEnviado = cifrador.byteToString(mensaje);
+		mensajeCifrado = cifrador.encriptaMensaje(mensajeClaro, publicKeyAlicia );
+		mensajeCifradoEnviado = cifrador.byteToString(mensajeCifrado);
 		txtMensajeFirmado.appendText("," + mensajeCifradoEnviado);
 		System.out.println("Mensaje cifrado enviado\t\t" + mensajeCifradoEnviado + "\n");
 		
@@ -286,8 +319,8 @@ public class FirmaDigitalControlador implements Initializable {
 		
 		System.out.println("\n\n------------------ BETO ENVÍA MENSAJE A ALICIA ---------------\n");
 		
-		enviar(firmaBeto, mensajeCifradoEnviado);
-		recibir(firmaBeto, mensajeCifradoRecibido);
+		enviar(firmaEnviada, mensajeCifradoEnviado);
+		recibir(firmaRecibida, mensajeCifradoRecibido);
 		efectosEnviarMensaje();
 		
 	}
@@ -316,6 +349,8 @@ public class FirmaDigitalControlador implements Initializable {
 			
 		}
 		
+		firmaRecibida = this.firmaEnviada;
+		
 	}
 	
 	private String interceptarMensaje() {
@@ -332,7 +367,7 @@ public class FirmaDigitalControlador implements Initializable {
 	
 	private void recibir(String firmaEmisor, String mensajeCifrado) {
 		txtMensajeRecibido.setText(firmaEmisor + "," + mensajeCifrado);
-		System.out.println("Firma recibida\t\t" + firmaBeto + "\n");
+		System.out.println("Firma recibida\t\t" + firmaEnviada + "\n");
 		System.out.println("Mensaje cifrado recibido\t\t" + mensajeCifradoRecibido + "\n");
 		
 	}
@@ -357,7 +392,64 @@ public class FirmaDigitalControlador implements Initializable {
 	@FXML
 	protected void descifrarMensaje() {
 		
-		efectosDescifrarMensaje();
+		try {
+			
+			descifraFirma(firmaEmisor);
+			if( mensajeCifradoEnviado.equals(mensajeCifradoRecibido) ) {
+				descifraMensaje(mensajeCifrado);
+			} else {
+				Dialogs.acceptDialog("Mensaje no aceptado",
+						"Al parecer tu mensaje ha sido modificado.",
+						(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			}
+			
+			Platform.runLater(() -> {
+				efectosDescifrarMensaje();
+			});
+			
+		} catch ( Exception e ) {
+			Dialogs.acceptDialog("Mensaje no aceptado",
+					"Hubo un error al descifrar el mensaje y verificar la firma.\n Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			e.printStackTrace();
+		}
+		/*} catch ( InvalidKeyException e ) {
+			Dialogs.acceptDialog("Mensaje no aceptado",
+					"Hubo un error al firmar el mensaje. Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			e.printStackTrace();
+		} catch ( NoSuchAlgorithmException e ) {
+			
+		} catch ( NoSuchPaddingException e ) {
+			
+		} catch ( IllegalBlockSizeException e ) {
+			
+		} catch ( BadPaddingException e) {
+			
+		} catch (FileNotFoundException e) {
+			
+		} catch ( InvalidKeySpecException e ) {
+			
+		} catch ( IOException e ) {
+			
+		}*/
+		
+	}
+	
+	private void descifraFirma(byte[] firma) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, FileNotFoundException, InvalidKeySpecException, IOException {
+		
+		hashReceptor = cifrador.desFirma(firma, publicKeyBeto);
+		resumenRecibido = cifrador.byteToString(hashReceptor);
+		txtFirmaDescrifrada.setText(resumenRecibido);
+		System.out.println("El nuevo resumen\t\t" + resumenRecibido + "\n");
+		
+	}
+	
+	private void descifraMensaje(byte[] mensajeCifrado) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, FileNotFoundException, InvalidKeySpecException, IOException  {
+		
+		mensajeDescifradoRecibido  = cifrador.desencriptaMensaje(mensajeCifrado, privateKeyAlicia);
+		txtMensajeAceptado.setText(mensajeDescifradoRecibido);
+		System.out.println("El mensaje desencriptado\t\t" + mensajeDescifradoRecibido + "\n");
 		
 	}
 	
@@ -369,7 +461,7 @@ public class FirmaDigitalControlador implements Initializable {
 		
 		panelBeto.setEffect(null);
 		
-		if( txtMensajeClaro.getText().trim().equals( txtMensajeAceptado.getText().trim() ) ) {
+		if( resumenRecibido.equals(resumenEnviado) ) {
 			Dialogs.acceptDialog("Mensaje aceptado",
 					"Excelente, el mensaje llegó sin modificaciones.",
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, false);
