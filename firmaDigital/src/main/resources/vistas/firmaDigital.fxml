@@ -52,9 +52,9 @@
                         <String fx:value="rounded-1" />
                      </styleClass>
                      <center>
-                        <VBox spacing="18.0" styleClass="align-center" BorderPane.alignment="CENTER">
+                        <VBox spacing="12.0" styleClass="align-center" BorderPane.alignment="CENTER">
                            <children>
-                              <GridPane hgap="12.0" vgap="6.0">
+                              <GridPane hgap="12.0" vgap="12.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -117,13 +117,15 @@
                                     <String fx:value="padding-2" />
                                  </styleClass>
                               </GridPane>
-                              <GridPane hgap="12.0" layoutX="10.0" layoutY="151.0" styleClass="padding-1" vgap="15.0">
+                              <GridPane hgap="15.0" layoutX="10.0" layoutY="151.0" styleClass="padding-1" vgap="15.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                  </columnConstraints>
                                  <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -149,9 +151,9 @@
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <HBox layoutX="10.0" layoutY="10.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="2">
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="4">
                                        <children>
-                                          <Label fx:id="lblMensajeFirmado" disable="true" text="Mensaje Firmado">
+                                          <Label fx:id="lblDatosEnviados" disable="true" text="Datos a Enviar">
                                              <styleClass>
                                                 <String fx:value="text-light" />
                                                 <String fx:value="label-bold" />
@@ -159,9 +161,9 @@
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <HBox layoutX="121.0" layoutY="122.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                    <HBox layoutX="121.0" layoutY="122.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                        <children>
-                                          <JFXButton fx:id="btnEnviar" disable="true" graphicTextGap="8.0" onAction="#enviarMensaje" prefWidth="116.0" text="Enviar">
+                                          <JFXButton fx:id="btnEnviar" disable="true" graphicTextGap="8.0" onAction="#enviarMensaje" prefWidth="170.0" text="Enviar">
                                              <styleClass>
                                                 <String fx:value="raised" />
                                                 <String fx:value="button-display-right" />
@@ -176,7 +178,7 @@
                                     </HBox>
                                     <HBox layoutX="113.0" layoutY="68.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2">
                                        <children>
-                                          <JFXButton fx:id="btnHash" disable="true" graphicTextGap="8.0" onAction="#calcularHash" prefWidth="116.0" text="Hash">
+                                          <JFXButton fx:id="btnHash" disable="true" graphicTextGap="8.0" onAction="#calcularHash" prefWidth="170.0" text="Hash">
                                              <styleClass>
                                                 <String fx:value="raised" />
                                                 <String fx:value="button-display-right" />
@@ -191,25 +193,25 @@
                                     </HBox>
                                     <TextField fx:id="txtMensajeClaro" disable="true" onAction="#calcularHash" GridPane.columnIndex="1">
                                        <styleClass>
-                                          <String fx:value="medium" />
+                                          <String fx:value="small" />
                                           <String fx:value="bold" />
                                        </styleClass>
                                     </TextField>
                                     <TextField fx:id="txtResumen" disable="true" editable="false" onAction="#firmarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <styleClass>
-                                          <String fx:value="medium" />
+                                          <String fx:value="small" />
                                           <String fx:value="bold" />
                                        </styleClass>
                                     </TextField>
-                                    <TextField fx:id="txtMensajeFirmado" disable="true" editable="false" onAction="#enviarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <TextField fx:id="txtDatosEnviados" disable="true" editable="false" onAction="#enviarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <styleClass>
-                                          <String fx:value="medium" />
+                                          <String fx:value="small" />
                                           <String fx:value="bold" />
                                        </styleClass>
                                     </TextField>
                                     <HBox layoutX="400.0" layoutY="22.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                        <children>
-                                          <JFXButton fx:id="btnFirmar" disable="true" onAction="#firmarMensaje" prefWidth="116.0" text="Firmar">
+                                          <JFXButton fx:id="btnFirmar" disable="true" onAction="#firmarMensaje" prefWidth="170.0" text="Firmar">
                                              <styleClass>
                                                 <String fx:value="raised" />
                                                 <String fx:value="button-display-right" />
@@ -222,13 +224,79 @@
                                           </JFXButton>
                                        </children>
                                     </HBox>
+                                    <HBox layoutX="22.0" layoutY="22.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label fx:id="lblFirma" disable="true" text="Firma">
+                                             <styleClass>
+                                                <String fx:value="text-light" />
+                                                <String fx:value="label-bold" />
+                                             </styleClass>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="22.0" layoutY="119.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label fx:id="lblMensajeCifrado" disable="true" text="Mensaje cifrado">
+                                             <styleClass>
+                                                <String fx:value="text-light" />
+                                                <String fx:value="label-bold" />
+                                             </styleClass>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <TextField fx:id="txtFirma" disable="true" editable="false" layoutX="147.0" layoutY="70.0" onAction="#cifrarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="small" />
+                                          <String fx:value="bold" />
+                                       </styleClass>
+                                    </TextField>
+                                    <TextField fx:id="txtMensajeCifrado" disable="true" editable="false" layoutX="147.0" layoutY="114.0" onAction="#empaquetarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="small" />
+                                          <String fx:value="bold" />
+                                       </styleClass>
+                                    </TextField>
+                                    <HBox layoutX="395.0" layoutY="64.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <children>
+                                          <JFXButton fx:id="btnCifrar" disable="true" graphicTextGap="8.0" onAction="#cifrarMensaje" prefWidth="170.0" text="Cifrar">
+                                             <styleClass>
+                                                <String fx:value="raised" />
+                                                <String fx:value="button-display-right" />
+                                                <String fx:value="sea-button" />
+                                                <String fx:value="button-rounded" />
+                                             </styleClass>
+                                             <graphic>
+                                                <MaterialDesignIconView glyphName="CODE_BRACES" size="18" styleClass="glyph" />
+                                             </graphic>
+                                          </JFXButton>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="395.0" layoutY="109.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <children>
+                                          <HBox spacing="10.0" styleClass="align-center">
+                                             <children>
+                                                <JFXButton fx:id="btnEmpaquetar" disable="true" graphicTextGap="8.0" onAction="#empaquetarMensaje" prefWidth="170.0" text="Empaquetar">
+                                                   <styleClass>
+                                                      <String fx:value="raised" />
+                                                      <String fx:value="button-display-right" />
+                                                      <String fx:value="sea-button" />
+                                                      <String fx:value="button-rounded" />
+                                                   </styleClass>
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="CALL_MERGE" size="18" styleClass="glyph" />
+                                                   </graphic>
+                                                </JFXButton>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </GridPane>
                            </children>
                         </VBox>
                      </center>
                      <top>
-                        <HBox spacing="5.0" BorderPane.alignment="CENTER">
+                        <HBox spacing="5.0" styleClass="align-center" BorderPane.alignment="CENTER">
                            <children>
                               <MaterialDesignIconView fill="#09b0e7" glyphName="ACCOUNT" size="24" />
                               <Label text="Emisor |">
@@ -245,10 +313,6 @@
                                  </styleClass>
                               </Label>
                            </children>
-                           <styleClass>
-                              <String fx:value="align-center" />
-                              <String fx:value="padding-top-1" />
-                           </styleClass>
                         </HBox>
                      </top>
                   </BorderPane>
@@ -258,7 +322,7 @@
                         <String fx:value="rounded-1" />
                      </styleClass>
                      <top>
-                        <HBox spacing="5.0" BorderPane.alignment="CENTER">
+                        <HBox spacing="5.0" styleClass="align-center" BorderPane.alignment="CENTER">
                            <children>
                               <MaterialDesignIconView fill="#2bf09e" glyphName="ACCOUNT" size="24" />
                               <Label text="Receptor |">
@@ -275,18 +339,14 @@
                                  </styleClass>
                               </Label>
                            </children>
-                           <styleClass>
-                              <String fx:value="align-center" />
-                              <String fx:value="padding-top-1" />
-                           </styleClass>
                         </HBox>
                      </top>
                      <center>
                         <StackPane BorderPane.alignment="CENTER">
                            <children>
-                              <VBox spacing="15.0" styleClass="align-center">
+                              <VBox spacing="12.0" styleClass="align-center">
                                  <children>
-                                    <GridPane hgap="12.0" vgap="6.0">
+                                    <GridPane hgap="12.0" vgap="12.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -359,21 +419,13 @@
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <HBox spacing="12.0" styleClass="align-center-right">
                                              <children>
-                                                <Label fx:id="lblMensajeRecibido" disable="true" text="Mensaje recibido">
-                                                   <styleClass>
-                                                      <String fx:value="text-light" />
-                                                      <String fx:value="label-bold" />
-                                                   </styleClass>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <HBox layoutX="10.0" layoutY="10.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="1">
-                                             <children>
-                                                <Label fx:id="lblFirmaDescifrada" disable="true" text="Firma descifrada">
+                                                <Label fx:id="lblDatosRecibidos" disable="true" text="Datos recibidos">
                                                    <styleClass>
                                                       <String fx:value="text-light" />
                                                       <String fx:value="label-bold" />
@@ -383,6 +435,16 @@
                                           </HBox>
                                           <HBox layoutX="10.0" layoutY="10.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="2">
                                              <children>
+                                                <Label fx:id="lblFirmaDescifrada" disable="true" text="Firma descifrada">
+                                                   <styleClass>
+                                                      <String fx:value="text-light" />
+                                                      <String fx:value="label-bold" />
+                                                   </styleClass>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="10.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="4">
+                                             <children>
                                                 <Label fx:id="lblMensajeAceptado" disable="true" text="Mensaje aceptado">
                                                    <styleClass>
                                                       <String fx:value="text-light" />
@@ -391,10 +453,10 @@
                                                 </Label>
                                              </children>
                                           </HBox>
-                                          <HBox layoutX="121.0" layoutY="122.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <HBox layoutX="113.0" layoutY="68.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2">
+                                          <HBox layoutX="121.0" layoutY="122.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <HBox layoutX="113.0" layoutY="68.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                              <children>
-                                                <JFXButton fx:id="btnDescifrar" disable="true" graphicTextGap="8.0" onAction="#descifrarMensaje" prefWidth="116.0" text="Descifrar">
+                                                <JFXButton fx:id="btnDescifrar" disable="true" graphicTextGap="8.0" onAction="#descifrarMensaje" prefWidth="170.0" text="Descifrar">
                                                    <styleClass>
                                                       <String fx:value="raised" />
                                                       <String fx:value="button-display-right" />
@@ -407,24 +469,90 @@
                                                 </JFXButton>
                                              </children>
                                           </HBox>
-                                          <TextField fx:id="txtMensajeRecibido" disable="true" editable="false" onAction="#descifrarMensaje" GridPane.columnIndex="1">
+                                          <TextField fx:id="txtDatosRecibidos" disable="true" editable="false" onAction="#desempaquetarMensaje" GridPane.columnIndex="1">
                                              <styleClass>
-                                                <String fx:value="medium" />
+                                                <String fx:value="small" />
                                                 <String fx:value="bold" />
                                              </styleClass>
                                           </TextField>
-                                          <TextField fx:id="txtFirmaDescrifrada" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <TextField fx:id="txtMensajeRecibido" disable="true" editable="false" onAction="#descifrarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <styleClass>
-                                                <String fx:value="medium" />
+                                                <String fx:value="small" />
                                                 <String fx:value="bold" />
                                              </styleClass>
                                           </TextField>
-                                          <TextField fx:id="txtMensajeAceptado" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                          <TextField fx:id="txtMensajeAceptado" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                              <styleClass>
-                                                <String fx:value="medium" />
+                                                <String fx:value="small" />
                                                 <String fx:value="bold" />
                                              </styleClass>
                                           </TextField>
+                                          <HBox layoutX="22.0" layoutY="123.0" spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label fx:id="lblFirmaRecibida" disable="true" text="Firma recibida">
+                                                   <styleClass>
+                                                      <String fx:value="text-light" />
+                                                      <String fx:value="label-bold" />
+                                                   </styleClass>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <TextField fx:id="txtFirmaRecibida" disable="true" editable="false" layoutX="174.0" layoutY="22.0" onAction="#desfirmarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <styleClass>
+                                                <String fx:value="small" />
+                                                <String fx:value="bold" />
+                                             </styleClass>
+                                          </TextField>
+                                          <TextField fx:id="txtFirmaDescifrada" disable="true" editable="false" layoutX="174.0" layoutY="68.0" onAction="#descifrarMensaje" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <styleClass>
+                                                <String fx:value="small" />
+                                                <String fx:value="bold" />
+                                             </styleClass>
+                                          </TextField>
+                                          <HBox layoutX="402.0" layoutY="160.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2">
+                                             <children>
+                                                <HBox spacing="10.0" styleClass="align-center">
+                                                   <children>
+                                                      <JFXButton fx:id="btnDesempaquetar" disable="true" graphicTextGap="8.0" onAction="#desempaquetarMensaje" prefWidth="170.0" text="Desempaquetar">
+                                                         <styleClass>
+                                                            <String fx:value="raised" />
+                                                            <String fx:value="button-display-right" />
+                                                            <String fx:value="sea-button" />
+                                                            <String fx:value="button-rounded" />
+                                                         </styleClass>
+                                                         <graphic>
+                                                            <MaterialDesignIconView glyphName="CALL_SPLIT" size="20" />
+                                                         </graphic>
+                                                      </JFXButton>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="12.0" styleClass="align-center-right" GridPane.rowIndex="3">
+                                             <children>
+                                                <Label fx:id="lblMensajeRecibido" disable="true" text="Mensaje recibido">
+                                                   <styleClass>
+                                                      <String fx:value="text-light" />
+                                                      <String fx:value="label-bold" />
+                                                   </styleClass>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="402.0" layoutY="162.0" spacing="10.0" styleClass="align-center" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <children>
+                                                <JFXButton fx:id="btnDesfirmar" disable="true" graphicTextGap="8.0" onAction="#desfirmarMensaje" prefWidth="170.0" text="Desfirmar">
+                                                   <styleClass>
+                                                      <String fx:value="raised" />
+                                                      <String fx:value="button-display-right" />
+                                                      <String fx:value="sea-button" />
+                                                      <String fx:value="button-rounded" />
+                                                   </styleClass>
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="FUNCTION" size="18" />
+                                                   </graphic>
+                                                </JFXButton>
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </GridPane>
                                  </children>
@@ -461,12 +589,12 @@
                      </children>
                      <styleClass>
                         <String fx:value="align-center" />
-                        <String fx:value="padding-bottom-2" />
+                        <String fx:value="padding-bottom-1" />
                      </styleClass>
                   </HBox>
                </center>
                <bottom>
-                  <StackPane styleClass="padding-bottom-3" BorderPane.alignment="CENTER">
+                  <StackPane styleClass="padding-bottom-2" BorderPane.alignment="CENTER">
                      <children>
                         <JFXButton fx:id="btnGenerarLlaves" graphicTextGap="8.0" onAction="#generarLlaves" text="Generar Llaves">
                            <styleClass>

@@ -74,7 +74,10 @@ public class Rsa {
 			return encriptado;
 	    }
 	    
-	    public byte[] desFirma(byte[] firma, PublicKey publicKey ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    public byte[] desFirma(byte[] firma, PublicKey publicKey ) throws NoSuchAlgorithmException, 
+	    		NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException,
+	    		FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException 
+	    {
 	    	//PublicKey publicKey;
 	    	//publicKey = loadPublicKey("publickey.dat");
 	    	 rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -102,7 +105,10 @@ public class Rsa {
 	    }
 	    
 	    
-	    public String desencriptaMensaje(byte[] mensajeEncriptado, PrivateKey privateKeyReceptor ) throws NoSuchAlgorithmException, NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    public String desencriptaMensaje(byte[] mensajeEncriptado, PrivateKey privateKeyReceptor ) throws NoSuchAlgorithmException,
+	    		NoSuchPaddingException,IllegalBlockSizeException, BadPaddingException, InvalidKeyException, FileNotFoundException,IOException,
+	    		NoSuchAlgorithmException, InvalidKeySpecException
+	    {
 	    	//PublicKey publicKey;
 	    	//publicKey = loadPublicKey("publickey.dat");
 	    	 rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -122,7 +128,10 @@ public class Rsa {
 	        fos.write(publicKeyBytes);
 	        fos.close();
 	     }
-	    public static PublicKey loadPublicKey(String fileName) throws FileNotFoundException,IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	    
+	    public static PublicKey loadPublicKey(String fileName) throws FileNotFoundException,IOException, 
+	    		NoSuchAlgorithmException, InvalidKeySpecException 
+	    {
 	        FileInputStream fis = new FileInputStream(fileName);
 	        int numBtyes = fis.available();
 	        byte[] bytes = new byte[numBtyes];
@@ -134,6 +143,7 @@ public class Rsa {
 	        PublicKey keyFromBytes = keyFactory.generatePublic(keySpec);
 	        return keyFromBytes;
 	     }
+	    
 	    public static PrivateKey loadPrivateKey(String fileName) throws Exception {
 	        FileInputStream fis = new FileInputStream(fileName);
 	        int numBtyes = fis.available();

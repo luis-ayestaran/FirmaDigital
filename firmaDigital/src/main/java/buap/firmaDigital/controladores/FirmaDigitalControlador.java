@@ -62,9 +62,23 @@ public class FirmaDigitalControlador implements Initializable {
 	public JFXButton btnFirmar;
 	
 	@FXML
-	public Label lblMensajeFirmado;
+	public Label lblFirma;
 	@FXML
-	public TextField txtMensajeFirmado;
+	public TextField txtFirma;
+	@FXML
+	public JFXButton btnCifrar;
+	
+	@FXML
+	public Label lblMensajeCifrado;
+	@FXML
+	public TextField txtMensajeCifrado;
+	@FXML
+	public JFXButton btnEmpaquetar;
+	
+	@FXML
+	public Label lblDatosEnviados;
+	@FXML
+	public TextField txtDatosEnviados;
 	@FXML
 	public JFXButton btnEnviar;
 	
@@ -72,6 +86,25 @@ public class FirmaDigitalControlador implements Initializable {
 	
 	@FXML
 	public BorderPane panelAlicia;
+	
+	@FXML
+	public Label lblDatosRecibidos;
+	@FXML
+	public TextField txtDatosRecibidos;
+	@FXML
+	public JFXButton btnDesempaquetar;
+	
+	@FXML
+	public Label lblFirmaRecibida;
+	@FXML
+	public TextField txtFirmaRecibida;
+	@FXML
+	public JFXButton btnDesfirmar;
+	
+	@FXML
+	public Label lblFirmaDescifrada;
+	@FXML
+	public TextField txtFirmaDescifrada;
 	
 	@FXML
 	public TextArea txtLlavePublicaAlicia;
@@ -86,11 +119,6 @@ public class FirmaDigitalControlador implements Initializable {
 	public TextField txtMensajeRecibido;
 	@FXML
 	public JFXButton btnDescifrar;
-	
-	@FXML
-	public Label lblFirmaDescifrada;
-	@FXML
-	public TextField txtFirmaDescrifrada;
 	
 	@FXML
 	public Label lblMensajeAceptado;
@@ -190,9 +218,13 @@ public class FirmaDigitalControlador implements Initializable {
 		
 		txtMensajeClaro.clear();
 		txtResumen.clear();
-		txtMensajeFirmado.clear();
+		txtFirma.clear();
+		txtMensajeCifrado.clear();
+		txtDatosEnviados.clear();
+		txtDatosRecibidos.clear();
+		txtFirmaRecibida.clear();
+		txtFirmaDescifrada.clear();
 		txtMensajeRecibido.clear();
-		txtFirmaDescrifrada.clear();
 		txtMensajeAceptado.clear();
 		
 	}
@@ -269,7 +301,6 @@ public class FirmaDigitalControlador implements Initializable {
 		try {
 			
 			aplicaFirma();
-			cifraMensaje();
 			Platform.runLater(() -> {
 				efectosFirmarMensaje();
 			});
@@ -287,17 +318,9 @@ public class FirmaDigitalControlador implements Initializable {
 		
 		firmaEmisor = cifrador.enfirma(hashEmisor, privateKeyBeto);
 		firmaEnviada = cifrador.byteToString(firmaEmisor).trim();
-		txtMensajeFirmado.setText(firmaEnviada);
+		txtFirma.setText(firmaEnviada);
+		//txtDatosEnviados.setText(firmaEnviada);
 		System.out.println("Firma de Beto\t\t\t" + firmaEnviada + "\n");
-		
-	}
-	
-	private void cifraMensaje() throws Exception {
-		
-		mensajeCifrado = cifrador.encriptaMensaje(mensajeClaro, publicKeyAlicia );
-		mensajeCifradoEnviado = cifrador.byteToString(mensajeCifrado);
-		txtMensajeFirmado.appendText("," + mensajeCifradoEnviado);
-		System.out.println("Mensaje cifrado enviado\t\t" + mensajeCifradoEnviado + "\n");
 		
 	}
 	
@@ -307,9 +330,90 @@ public class FirmaDigitalControlador implements Initializable {
 		txtResumen.setDisable(true);
 		btnFirmar.setDisable(true);
 		
-		lblMensajeFirmado.setDisable(false);
-		txtMensajeFirmado.setDisable(false);
-		txtMensajeFirmado.requestFocus();
+		lblFirma.setDisable(false);
+		txtFirma.setDisable(false);
+		txtFirma.requestFocus();
+		btnCifrar.setDisable(false);
+		
+	}
+	
+	@FXML
+	protected void cifrarMensaje() {
+		
+		try {
+			
+			cifraMensaje();
+			Platform.runLater(() -> {
+				efectosCifrarMensaje();
+			});
+			
+		} catch( Exception e ) {
+			Dialogs.acceptDialog("Error al firmar el mensaje",
+					"Hubo un error al cifrar el mensaje. Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void cifraMensaje() throws Exception {
+		
+		mensajeCifrado = cifrador.encriptaMensaje(mensajeClaro, publicKeyAlicia );
+		mensajeCifradoEnviado = cifrador.byteToString(mensajeCifrado);
+		txtMensajeCifrado.setText(mensajeCifradoEnviado);
+		//txtDatosEnviados.appendText("," + mensajeCifradoEnviado);
+		System.out.println("Mensaje cifrado enviado\t\t" + mensajeCifradoEnviado + "\n");
+		
+	}
+	
+	private void efectosCifrarMensaje() {
+		
+		lblFirma.setDisable(true);
+		txtFirma.setDisable(true);
+		btnCifrar.setDisable(true);
+		
+		lblMensajeCifrado.setDisable(false);
+		txtMensajeCifrado.setDisable(false);
+		txtMensajeCifrado.requestFocus();
+		btnEmpaquetar.setDisable(false);
+		
+	}
+	
+	@FXML
+	protected void empaquetarMensaje() {
+		
+		try {
+			
+			empaquetaMensaje();
+			Platform.runLater(() -> {
+				efectosEmpaquetarMensaje();
+			});
+			
+		} catch( Exception e ) {
+			Dialogs.acceptDialog("Error al firmar el mensaje",
+					"Hubo un error al cifrar el mensaje. Vuelve a intentarlo.",
+					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void empaquetaMensaje() throws Exception {
+		
+		txtDatosEnviados.appendText(firmaEnviada + "," + mensajeCifradoEnviado);
+		System.out.println("Datos enviados\t\t\t" + txtDatosEnviados.getText() + "\n");
+		
+	}
+	
+	private void efectosEmpaquetarMensaje() {
+		
+		lblMensajeCifrado.setDisable(true);
+		txtMensajeCifrado.setDisable(true);
+		btnEmpaquetar.setDisable(true);
+		
+		lblDatosEnviados.setDisable(false);
+		txtDatosEnviados.setDisable(false);
+		txtDatosEnviados.requestFocus();
 		btnEnviar.setDisable(false);
 		
 	}
@@ -349,7 +453,7 @@ public class FirmaDigitalControlador implements Initializable {
 			
 		}
 		
-		firmaRecibida = this.firmaEnviada;
+		firmaRecibida = firmaEnviada;
 		
 	}
 	
@@ -366,22 +470,24 @@ public class FirmaDigitalControlador implements Initializable {
 	}
 	
 	private void recibir(String firmaEmisor, String mensajeCifrado) {
-		txtMensajeRecibido.setText(firmaEmisor + "," + mensajeCifrado);
-		System.out.println("Firma recibida\t\t" + firmaEnviada + "\n");
-		System.out.println("Mensaje cifrado recibido\t\t" + mensajeCifradoRecibido + "\n");
+		
+		System.out.println("\n\n------------------ ALICIA RECIBE EL MENSAJE DE BETO ---------------\n");
+		txtDatosRecibidos.setText(firmaEmisor + "," + mensajeCifrado);
+		System.out.println("Firma de Beto recibida\t\t\t" + firmaEnviada + "\n");
+		System.out.println("Mensaje cifrado de Beto recibido\t" + mensajeCifradoRecibido + "\n");
 		
 	}
 	
 	private void efectosEnviarMensaje() {
 		
-		lblMensajeFirmado.setDisable(true);
-		txtMensajeFirmado.setDisable(true);
+		lblDatosEnviados.setDisable(true);
+		txtDatosEnviados.setDisable(true);
 		btnEnviar.setDisable(true);
 		
-		lblMensajeRecibido.setDisable(false);
-		txtMensajeRecibido.setDisable(false);
-		txtMensajeRecibido.requestFocus();
-		btnDescifrar.setDisable(false);
+		lblDatosRecibidos.setDisable(false);
+		txtDatosRecibidos.setDisable(false);
+		txtDatosRecibidos.requestFocus();
+		btnDesempaquetar.setDisable(false);
 		
 		panelAlicia.setEffect(null);
 		GaussianBlur blur = new GaussianBlur();
@@ -390,21 +496,44 @@ public class FirmaDigitalControlador implements Initializable {
 	}
 	
 	@FXML
-	protected void descifrarMensaje() {
+	protected void desempaquetarMensaje() {
+		
+		desempaquetaMensaje();
+		Platform.runLater(() -> {
+			efectosDesempaquetarMensaje();
+		});
+		
+	}
+	
+	private void desempaquetaMensaje() {
+		
+		txtFirmaRecibida.setText(firmaRecibida);
+		txtMensajeRecibido.setText(mensajeCifradoRecibido);
+		
+	}
+	
+	private void efectosDesempaquetarMensaje() {
+		
+		lblDatosRecibidos.setDisable(true);
+		txtDatosRecibidos.setDisable(true);
+		btnDesempaquetar.setDisable(true);
+		
+		lblFirmaRecibida.setDisable(false);
+		txtFirmaRecibida.setDisable(false);
+		btnDesfirmar.setDisable(false);
+		
+		txtFirmaRecibida.requestFocus();
+		
+	}
+	
+	@FXML
+	protected void desfirmarMensaje() {
 		
 		try {
 			
 			descifraFirma(firmaEmisor);
-			if( mensajeCifradoEnviado.equals(mensajeCifradoRecibido) ) {
-				descifraMensaje(mensajeCifrado);
-			} else {
-				Dialogs.acceptDialog("Mensaje no aceptado",
-						"Al parecer tu mensaje ha sido modificado.",
-						(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
-			}
-			
 			Platform.runLater(() -> {
-				efectosDescifrarMensaje();
+				efectosDesfirmarMensaje();
 			});
 			
 		} catch ( Exception e ) {
@@ -413,39 +542,68 @@ public class FirmaDigitalControlador implements Initializable {
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
 			e.printStackTrace();
 		}
-		/*} catch ( InvalidKeyException e ) {
-			Dialogs.acceptDialog("Mensaje no aceptado",
-					"Hubo un error al firmar el mensaje. Vuelve a intentarlo.",
-					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
-			e.printStackTrace();
-		} catch ( NoSuchAlgorithmException e ) {
-			
-		} catch ( NoSuchPaddingException e ) {
-			
-		} catch ( IllegalBlockSizeException e ) {
-			
-		} catch ( BadPaddingException e) {
-			
-		} catch (FileNotFoundException e) {
-			
-		} catch ( InvalidKeySpecException e ) {
-			
-		} catch ( IOException e ) {
-			
-		}*/
 		
 	}
 	
-	private void descifraFirma(byte[] firma) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, FileNotFoundException, InvalidKeySpecException, IOException {
+	private void descifraFirma(byte[] firma) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
+			IllegalBlockSizeException, BadPaddingException, FileNotFoundException, InvalidKeySpecException, IOException
+	{
 		
 		hashReceptor = cifrador.desFirma(firma, publicKeyBeto);
 		resumenRecibido = cifrador.byteToString(hashReceptor);
-		txtFirmaDescrifrada.setText(resumenRecibido);
+		txtFirmaDescifrada.setText(resumenRecibido);
 		System.out.println("El nuevo resumen\t\t" + resumenRecibido + "\n");
 		
 	}
 	
-	private void descifraMensaje(byte[] mensajeCifrado) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, FileNotFoundException, InvalidKeySpecException, IOException  {
+	private void efectosDesfirmarMensaje() {
+		
+		lblFirmaRecibida.setDisable(true);
+		txtFirmaRecibida.setDisable(true);
+		btnDesfirmar.setDisable(true);
+		
+		lblMensajeRecibido.setDisable(false);
+		txtMensajeRecibido.setDisable(false);
+		txtMensajeRecibido.requestFocus();
+		btnDescifrar.setDisable(false);
+		
+	}
+	
+	
+	@FXML
+	protected void descifrarMensaje() {
+		
+		try {
+			
+			if( mensajeCifradoEnviado.equals(mensajeCifradoRecibido) ) {
+				descifraMensaje(mensajeCifrado);
+			} else {
+				Dialogs.acceptDialog("Mensaje no aceptado",
+								"La longitud en bytes del mensaje recibido no corresponde con\n"
+							+ 	"la longitud del mensaje enviado."
+						+ 	"\n\nCIUDADO. Al parecer tu mensaje ha sido modificado.",
+						(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			}
+			
+			Platform.runLater(() -> {
+				efectosDescifrarMensaje();
+			});
+			
+		} catch(Exception e) {
+			
+			Dialogs.acceptDialog("Mensaje no aceptado",
+					"La longitud en bytes del mensaje recibido no corresponde con\n"
+				+ 	"la longitud del mensaje enviado."
+			+ 	"\n\nCIUDADO. Al parecer tu mensaje ha sido modificado.",
+			(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
+			
+		}
+		
+	}
+	
+	private void descifraMensaje(byte[] mensajeCifrado) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
+			IllegalBlockSizeException, BadPaddingException, FileNotFoundException, InvalidKeySpecException, IOException 
+	{
 		
 		mensajeDescifradoRecibido  = cifrador.desencriptaMensaje(mensajeCifrado, privateKeyAlicia);
 		txtMensajeAceptado.setText(mensajeDescifradoRecibido);
@@ -455,21 +613,23 @@ public class FirmaDigitalControlador implements Initializable {
 	
 	private void efectosDescifrarMensaje() {
 		
-		lblMensajeRecibido.setDisable(true);
-		txtMensajeRecibido.setDisable(true);
-		btnDescifrar.setDisable(true);
-		
-		panelBeto.setEffect(null);
-		
 		if( resumenRecibido.equals(resumenEnviado) ) {
 			Dialogs.acceptDialog("Mensaje aceptado",
 					"Excelente, el mensaje llegó sin modificaciones.",
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, false);
 		} else {
 			Dialogs.acceptDialog("Mensaje no aceptado",
-					"Cuidado, parece que los mensajes no coinciden.",
+						"La longitud en bytes del mensaje recibido no corresponde con\n"
+					+ 	"la longitud del mensaje enviado."
+					+ 	"\n\nCIUDADO. Al parecer tu mensaje ha sido modificado.",
 					(StackPane) FirmaDigital.getStage().getScene().getRoot(), null, true);
 		}
+		
+		lblMensajeRecibido.setDisable(true);
+		txtMensajeRecibido.setDisable(true);
+		btnDescifrar.setDisable(true);
+		
+		panelBeto.setEffect(null);
 		
 		btnGenerarLlaves.setDisable(false);
 		btnGenerarLlaves.setText("Generar nuevas llaves");
